@@ -13,5 +13,6 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss">
+    $width:750px;
 </style>
