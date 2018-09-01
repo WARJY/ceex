@@ -2767,7 +2767,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "D:\\workspace-weex\\test\\src\\pages\\index.vue"
+__vue_options__.__file = "D:\\workspace-node\\ceex\\src\\pages\\index.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-6be49aa4"
@@ -2822,9 +2822,10 @@ exports.default = {
         NavMain: _NavMain2.default,
         Banner: _Banner2.default
     },
-    props: {},
     data: function data() {
         return {
+            refreshing: false,
+            loading: false,
             iconfont: "//at.alicdn.com/t/font_811848_qrm8hrhlfkg.ttf",
             navSetting: [{ name: "index", icon: "\uE751;", title: "首页" }, { name: "my", icon: "\uE75E;", title: "我的" }],
             //              navSetting:[
@@ -2850,9 +2851,25 @@ exports.default = {
             bannerSetting: [{ src: "https://vuejs.org/images/logo.png" }, { src: "https://vuejs.org/images/logo.png" }, { src: "https://vuejs.org/images/logo.png" }]
         };
     },
-    methods: {}
+    methods: {
+        handleRefresh: function handleRefresh() {
+            var _this = this;
+
+            this.$data.refreshing = true;
+            setTimeout(function () {
+                _this.$data.refreshing = false;
+            }, 1000);
+        },
+        handleLoading: function handleLoading() {
+            var _this2 = this;
+
+            this.$data.loading = true;
+            setTimeout(function () {
+                _this2.$data.loading = false;
+            }, 1000);
+        }
+    }
 }; //
-//
 //
 //
 //
@@ -2896,7 +2913,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "D:\\workspace-weex\\test\\src\\components\\Page.vue"
+__vue_options__.__file = "D:\\workspace-node\\ceex\\src\\components\\Page.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-5e693dc2"
@@ -2927,7 +2944,9 @@ module.exports = {
   },
   "loading": {
     "textAlign": "center",
-    "width": "750"
+    "width": "750",
+    "position": "relative",
+    "bottom": "228"
   }
 }
 
@@ -2953,39 +2972,38 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
 
 exports.default = {
     name: "page",
-    props: {},
+    props: {
+        refreshing: {
+            type: Boolean,
+            default: false
+        },
+        loading: {
+            type: Boolean,
+            default: false
+        }
+    },
     data: function data() {
         return {
             deviceWidth: 750,
-            deviceHeight: 1334,
-            refreshing: false,
-            loading: false
+            deviceHeight: 1334
         };
     },
     created: function created() {
         this.$data.deviceWidth = WXEnvironment.deviceWidth;
-        this.$data.deviceHeight = WXEnvironment.deviceHeight;
     },
 
     methods: {
         handleRefresh: function handleRefresh(e) {
-            var _this = this;
-
-            this.$data.refreshing = true;
-            setTimeout(function () {
-                _this.$data.refreshing = false;
-            }, 2000);
+            this.$emit("refreshing");
         },
         handleLoading: function handleLoading(e) {
-            var _this2 = this;
-
-            this.$data.loading = true;
-            setTimeout(function () {
-                _this2.$data.loading = false;
-            }, 2000);
+            this.$emit("loadining");
         }
     }
 };
@@ -3013,7 +3031,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('text', {
     staticClass: ["refresh"]
-  }, [_vm._v("正在刷新")])]), _vm._t("default"), _c('loading', {
+  }, [_vm._v("正在刷新")])]), _c('div', {
+    style: {
+      minHeight: (_vm.deviceHeight + 1) + 'px'
+    }
+  }, [_vm._t("default"), _c('div', {
+    staticStyle: {
+      height: "228px"
+    }
+  })], 2), _c('loading', {
     attrs: {
       "display": _vm.loading ? 'show' : 'hide'
     },
@@ -3022,7 +3048,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('text', {
     staticClass: ["loading"]
-  }, [_vm._v("正在加载")])])], 2)
+  }, [_vm._v("正在加载")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
@@ -3053,7 +3079,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "D:\\workspace-weex\\test\\src\\components\\NavMain.vue"
+__vue_options__.__file = "D:\\workspace-node\\ceex\\src\\components\\NavMain.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-406620c8"
@@ -3090,6 +3116,9 @@ module.exports = {
     "justifyContent": "center",
     "flexDirection": "row"
   },
+  "nav-placeholer": {
+    "height": "98"
+  },
   "nav-item": {
     "alignItems": "center",
     "justifyContent": "center",
@@ -3116,6 +3145,7 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+//
 //
 //
 //
@@ -3280,7 +3310,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "D:\\workspace-weex\\test\\src\\components\\Banner.vue"
+__vue_options__.__file = "D:\\workspace-node\\ceex\\src\\components\\Banner.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-ff942d88"
@@ -3452,15 +3482,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "slot": "index"
     },
     slot: "index"
-  }, [_c('Page', [_c('div', {
-    staticStyle: {
-      height: "2000px"
+  }, [_c('Page', {
+    attrs: {
+      "refreshing": _vm.refreshing,
+      "loading": _vm.loading
+    },
+    on: {
+      "refreshing": _vm.handleRefresh,
+      "loadining": _vm.handleLoading
     }
   }, [_c('Banner', {
     attrs: {
       "setting": _vm.bannerSetting
     }
-  })], 1)])], 1), _c('div', {
+  }), _c('div', {
+    staticStyle: {
+      height: "1500px",
+      backgroundColor: "#333"
+    }
+  })], 1)], 1), _c('div', {
     attrs: {
       "slot": "my"
     },
@@ -3477,7 +3517,7 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(20)
+__vue_styles__.push(__webpack_require__(23)
 )
 
 /* script */
@@ -3496,7 +3536,7 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "D:\\workspace-weex\\test\\src\\index.vue"
+__vue_options__.__file = "D:\\workspace-node\\ceex\\src\\index.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 __vue_options__._scopeId = "data-v-1a4d8e3c"
@@ -3514,12 +3554,7 @@ module.exports = __vue_exports__
 
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = {}
-
-/***/ }),
+/* 20 */,
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3549,6 +3584,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('router-view')
 },staticRenderFns: []}
 module.exports.render._withStripped = true
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+module.exports = {}
 
 /***/ })
 /******/ ]);

@@ -3,7 +3,10 @@
         <refresh @refresh="handleRefresh" :display="refreshing ? 'show' : 'hide'">
             <text class="refresh">正在刷新</text>
         </refresh>
-        <slot></slot>
+        <div :style="{minHeight:(deviceHeight + 1) + 'px'}">
+            <slot></slot>
+            <div style="height: 228px;"></div>
+        </div>
         <loading @loading="handleLoading" :display="loading ? 'show' : 'hide'">
             <text class="loading">正在加载</text>
         </loading>
@@ -13,31 +16,31 @@
 <script>
     export default{
         name:"page",
-        props:{},
+        props:{
+            refreshing:{
+                type:Boolean,
+                default:false
+            },
+            loading:{
+                type:Boolean,
+                default:false
+            }
+        },
         data(){
             return {
                 deviceWidth:750,
-                deviceHeight:1334,
-                refreshing:false,
-                loading:false
+                deviceHeight:1334
             }
         },
         created(){
             this.$data.deviceWidth = WXEnvironment.deviceWidth
-            this.$data.deviceHeight = WXEnvironment.deviceHeight
         },
         methods:{
             handleRefresh(e){
-                this.$data.refreshing = true
-                setTimeout(()=>{
-                    this.$data.refreshing = false
-                },2000)
+                this.$emit("refreshing")
             },
             handleLoading(e){
-                this.$data.loading = true
-                setTimeout(()=>{
-                    this.$data.loading = false
-                },2000)
+                this.$emit("loadining")
             }
         }
     }
@@ -54,5 +57,7 @@
     .loading{
         text-align: center;
         width: 750px;
+        position: relative;
+        bottom: 228px;
     }
 </style>

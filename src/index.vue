@@ -13,6 +13,5 @@
     }
 </script>
 
-<style lang="scss">
-    $width:750px;
+<style>
 </style>

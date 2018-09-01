@@ -1,10 +1,9 @@
 <template>
     <NavMain :iconfont="iconfont" :setting="navSetting" :styleDefault="styleDefault" :styleActive="styleActive">
         <div slot="index">
-            <Page>
-                <div style="height: 2000px;">
-                    <Banner :setting="bannerSetting" />
-                </div>
+            <Page :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading">
+                <Banner :setting="bannerSetting" />
+                <div style="height: 1500px;background-color: #333;"></div>
             </Page>
         </div>
         <div slot="my">
@@ -26,9 +25,10 @@
             NavMain:NavMain,
             Banner:Banner
         },
-        props:{},
         data:function(){
             return {
+                refreshing:false,
+                loading:false,
                 iconfont:"//at.alicdn.com/t/font_811848_qrm8hrhlfkg.ttf",
                 navSetting:[
                     {name:"index",icon:"\ue751;",title:"首页"},
@@ -62,7 +62,18 @@
             }
         },
         methods:{
-            
+            handleRefresh:function(){
+                this.$data.refreshing = true
+                setTimeout(()=>{
+                    this.$data.refreshing = false
+                },1000)
+            },
+            handleLoading:function(){
+                this.$data.loading = true
+                setTimeout(()=>{
+                    this.$data.loading = false
+                },1000)
+            }
         }
     }
 </script>

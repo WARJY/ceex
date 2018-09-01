@@ -17,6 +17,7 @@
                 <text :class="['title',index===currentIndex?'active':'']" :style="[index===currentIndex?styleActive.title:styleDefault.title]">{{item.title}}</text>
             </div>
         </div>
+        
     </div>
 </template>
 
@@ -95,6 +96,9 @@
         align-items: center;
         justify-content: center;
         flex-direction: row;
+    }
+    .nav-placeholer{
+        height: 98px;
     }
     .nav-item{
         align-items: center;
