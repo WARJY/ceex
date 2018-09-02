@@ -17,7 +17,6 @@
                 <text :class="['title',index===currentIndex?'active':'']" :style="[index===currentIndex?styleActive.title:styleDefault.title]">{{item.title}}</text>
             </div>
         </div>
-        
     </div>
 </template>
 

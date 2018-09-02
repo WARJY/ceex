@@ -1,11 +1,9 @@
 <template>
     <NavMain :iconfont="iconfont" :setting="navSetting" :styleDefault="styleDefault" :styleActive="styleActive">
-        <div slot="index">
-            <Page :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading">
-                <Banner :setting="bannerSetting" />
-                <div style="height: 1500px;background-color: #333;"></div>
-            </Page>
-        </div>
+        <Page slot="index" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading" :navbarHeight="90">
+            <wxc-minibar slot="nav" title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多"></wxc-minibar>
+            <Banner :setting="bannerSetting" />
+        </Page>
         <div slot="my">
             <Page>
                 <div>222</div>
@@ -18,12 +16,14 @@
     import Page from "@/components/Page"
     import NavMain from "@/components/NavMain"
     import Banner from "@/components/Banner"
+    import { WxcMinibar } from 'weex-ui'
     export default{
         name:"index",
         components:{
             Page:Page,
             NavMain:NavMain,
-            Banner:Banner
+            Banner:Banner,
+            WxcMinibar:WxcMinibar
         },
         data:function(){
             return {
@@ -35,7 +35,7 @@
                     {name:"my",icon:"\ue75e;",title:"我的"}
                 ],
 //              navSetting:[
-//                  {icon:"https://vuejs.org/images/logo.png",activeIcon:" ",title:"首页"},
+//                  {icon:"https://vuejs.org/images/logo.p ng",activeIcon:" ",title:"首页"},
 //                  {icon:"https://vuejs.org/images/logo.png",activeIcon:" ",title:"首页"}
 //              ]
                 styleDefault:{
