@@ -65,7 +65,6 @@
                 });
             }
             if(this.defaultIndex) this.$data.currentIndex = this.defaultInde
-            this.$data.deviceWidth = WXEnvironment.deviceWidth
             this.$data.deviceHeight = WXEnvironment.deviceHeight
         },
         methods:{

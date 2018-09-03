@@ -3,7 +3,7 @@
         <scroller class="banner" :style="{width:deviceWidth + 'px'}" show-scrollbar="false" scroll-direction="horizontal" @scroll="handleScroll">
             <image class="image" v-for="(item,index) in setting" :src="item.src" :style="{width:deviceWidth + 'px'}" :ref="'image' + index"></image>
         </scroller>
-        <div class="options">
+        <div class="options" :style="{width:deviceWidth + 'px'}">
             <div v-for="(item,index) in setting" :class="['orb',index===currentIndex?'active':' ']" @click="handleOrb(index)"></div>
         </div>
     </div>
@@ -30,9 +30,6 @@
                 deviceHeight: 1334,
                 currentIndex: 0
             }
-        },
-        created() {
-            this.$data.deviceWidth = WXEnvironment.deviceWidth
         },
         methods: {
             handleScroll(e) {

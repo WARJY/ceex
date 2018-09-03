@@ -4530,7 +4530,7 @@ module.exports = {}
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 
 var _Page = __webpack_require__(21);
@@ -4562,63 +4562,91 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
 
 exports.default = {
-    name: "index",
-    components: {
-        Page: _Page2.default,
-        NavMain: _NavMain2.default,
-        Banner: _Banner2.default,
-        WxcMinibar: _weexUi.WxcMinibar
-    },
-    data: function data() {
-        return {
-            refreshing: false,
-            loading: false,
-            iconfont: "//at.alicdn.com/t/font_811848_qrm8hrhlfkg.ttf",
-            navSetting: [{ name: "index", icon: "\uE751;", title: "首页" }, { name: "my", icon: "\uE75E;", title: "我的" }],
-            //              navSetting:[
-            //                  {icon:"https://vuejs.org/images/logo.p ng",activeIcon:" ",title:"首页"},
-            //                  {icon:"https://vuejs.org/images/logo.png",activeIcon:" ",title:"首页"}
-            //              ]
-            styleDefault: {
-                icon: {
-                    color: '#333'
-                },
-                title: {
-                    color: '#333'
-                }
-            },
-            styleActive: {
-                icon: {
-                    color: '#00d2ff'
-                },
-                title: {
-                    color: '#00d2ff'
-                }
-            },
-            bannerSetting: [{ src: "https://vuejs.org/images/logo.png" }, { src: "https://vuejs.org/images/logo.png" }, { src: "https://vuejs.org/images/logo.png" }]
-        };
-    },
-    methods: {
-        handleRefresh: function handleRefresh() {
-            var _this = this;
+	name: "index",
+	components: {
+		Page: _Page2.default,
+		NavMain: _NavMain2.default,
+		Banner: _Banner2.default,
+		WxcMinibar: _weexUi.WxcMinibar
+	},
+	data: function data() {
+		return {
+			refreshing: false,
+			loading: false,
+			isShow: false,
+			iconfont: "//at.alicdn.com/t/font_811848_qrm8hrhlfkg.ttf",
+			navSetting: [{
+				name: "index",
+				icon: "\uE751;",
+				title: "首页"
+			}, {
+				name: "my",
+				icon: "\uE75E;",
+				title: "我的"
+			}],
+			// 				navSetting: [{
+			// 						icon: "https://vuejs.org/images/logo.p ng",
+			// 						activeIcon: " ",
+			// 						title: "首页"
+			// 					},
+			// 					{
+			// 						icon: "https://vuejs.org/images/logo.png",
+			// 						activeIcon: " ",
+			// 						title: "首页"
+			// 					}
+			// 				],
+			styleDefault: {
+				icon: {
+					color: '#333'
+				},
+				title: {
+					color: '#333'
+				}
+			},
+			styleActive: {
+				icon: {
+					color: '#00d2ff'
+				},
+				title: {
+					color: '#00d2ff'
+				}
+			},
+			bannerSetting: [{
+				src: "https://vuejs.org/images/logo.png"
+			}, {
+				src: "https://vuejs.org/images/logo.png"
+			}, {
+				src: "https://vuejs.org/images/logo.png"
+			}]
+		};
+	},
+	mounted: function mounted() {
+		var _this = this;
 
-            this.$data.refreshing = true;
-            setTimeout(function () {
-                _this.$data.refreshing = false;
-            }, 1000);
-        },
-        handleLoading: function handleLoading() {
-            var _this2 = this;
+		setTimeout(function () {
+			_this.$data.isShow = true;
+		}, 1000);
+	},
+	methods: {
+		handleRefresh: function handleRefresh() {
+			var _this2 = this;
 
-            this.$data.loading = true;
-            setTimeout(function () {
-                _this2.$data.loading = false;
-            }, 1000);
-        }
-    }
+			this.$data.refreshing = true;
+			setTimeout(function () {
+				_this2.$data.refreshing = false;
+			}, 1000);
+		},
+		handleLoading: function handleLoading() {
+			var _this3 = this;
+
+			this.$data.loading = true;
+			setTimeout(function () {
+				_this3.$data.loading = false;
+			}, 1000);
+		}
+	}
 };
 
 /***/ }),
@@ -4683,7 +4711,8 @@ module.exports = {
     "flexDirection": "row",
     "alignItems": "center",
     "justifyContent": "center",
-    "paddingTop": "16"
+    "paddingTop": "16",
+    "paddingBottom": "16"
   },
   "loading": {
     "textAlign": "center",
@@ -4695,8 +4724,14 @@ module.exports = {
   "indicator": {
     "height": "40",
     "width": "40",
+    "color": "#00d2ff"
+  },
+  "indicator-loading": {
+    "height": "40",
+    "width": "40",
     "color": "#00d2ff",
-    "marginRight": "10"
+    "marginTop": "16",
+    "marginBottom": "16"
   }
 }
 
@@ -4708,84 +4743,145 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 
 var _weexUi = __webpack_require__(6);
 
-exports.default = {
-    name: "page",
-    props: {
-        refreshing: {
-            type: Boolean,
-            default: false
-        },
-        loading: {
-            type: Boolean,
-            default: false
-        },
-        navbarHeight: {
-            type: Number,
-            default: 90
-        }
-    },
-    data: function data() {
-        return {
-            deviceWidth: 750,
-            deviceHeight: 1334,
-            pageHeight: 1106,
-            navHeight: 90,
-            bottomHeight: 0,
-            refreshSlot: true,
-            loadingSlot: true
-        };
-    },
-    created: function created() {
-        this.$data.deviceWidth = WXEnvironment.deviceWidth;
-        this.$data.deviceHeight = WXEnvironment.deviceHeight;
-        this.$data.bottomHeight = this.navbarHeight;
-    },
-    ready: function ready() {
-        var navHeight = this.$refs.nav.offsetHeight;
-        this.$data.navHeight = navHeight;
-        this.$data.pageHeight = this.$data.deviceHeight - navHeight - this.navbarHeight - 40;
-        var refreshSlot = this.$refs.refreshSlot;
-        var loadingSlot = this.$refs.loadingSlot;
-        if (refreshSlot.offsetHeight > 0) this.$data.refreshSlot = true;
-        if (loadingSlot.offsetHeight > 0) this.$data.loadingSlot = true;
-    },
+var modal = weex.requireModule('modal'); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-    methods: {
-        handleRefresh: function handleRefresh(e) {
-            this.$emit("refreshing");
-        },
-        handleLoading: function handleLoading(e) {
-            this.$emit("loadining");
-        }
-    }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var dom = weex.requireModule('dom');
+exports.default = {
+	name: "page",
+	props: {
+		refreshing: {
+			type: Boolean,
+			default: false
+		},
+		loading: {
+			type: Boolean,
+			default: false
+		},
+		navbarHeight: {
+			type: Number,
+			default: 90
+		},
+		isShow: {
+			type: Boolean,
+			default: false
+		}
+	},
+	components: {
+		WxcLoading: _weexUi.WxcLoading
+	},
+	data: function data() {
+		return {
+			deviceWidth: 750,
+			deviceHeight: 0,
+			pageHeight: 0,
+			navHeight: 0,
+			bottomHeight: 0,
+			refreshSlot: false,
+			loadingSlot: false,
+			firstLoad: false
+		};
+	},
+	created: function created() {
+		this.$data.deviceHeight = WXEnvironment.deviceHeight;
+		this.$data.bottomHeight = this.navbarHeight;
+	},
+
+	watch: {
+		loading: function loading(val, old) {},
+		isShow: function isShow(val, old) {
+			var _this = this;
+
+			if (val === true && this.$data.firstLoad === false) {
+				setTimeout(function () {
+					var getNav = new Promise(function (r, j) {
+						try {
+							dom.getComponentRect(_this.$refs.nav, function (option) {
+								if (option.result) {
+									var navHeight = option.size.height;
+									if (navHeight > 0) _this.$data.navHeight = navHeight;
+									_this.$data.pageHeight = _this.$data.deviceHeight - navHeight - _this.navbarHeight - 40;
+									r(true);
+								}
+							});
+						} catch (e) {
+							j(false);
+						}
+					});
+					var getRefreshSlot = new Promise(function (r, j) {
+						try {
+							dom.getComponentRect(_this.$refs.refreshSlot, function (option) {
+								if (option.result === true) _this.$data.refreshSlot = true;
+								r(true);
+							});
+						} catch (e) {
+							j(false);
+						}
+					});
+					var getLoadingSlot = new Promise(function (r, j) {
+						try {
+							dom.getComponentRect(_this.$refs.loadingSlot, function (option) {
+								if (option.result === true) _this.$data.loadingSlot = true;
+								r(true);
+							});
+						} catch (e) {
+							j(false);
+						}
+					});
+					var process = [getNav, getRefreshSlot, getLoadingSlot];
+					Promise.all(process).then(function (data) {
+						var flag = true;
+						for (var i in data) {
+							if (data[i] !== true) flag = false;
+						}
+						if (flag === true) _this.$data.firstLoad = true;
+					});
+				}, 100);
+			}
+		}
+	},
+	methods: {
+		handleRefresh: function handleRefresh(e) {
+			this.$emit("refreshing");
+		},
+		handleLoading: function handleLoading(e) {
+			this.$emit("loadining");
+		}
+	}
+};
 
 /***/ }),
 /* 24 */
@@ -21260,7 +21356,7 @@ module.exports.render._withStripped = true
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
+  return _c('div', [(_vm.isShow) ? _c('div', [_c('div', {
     ref: "nav",
     staticClass: ["nav"]
   }, [_vm._t("nav")], 2), _c('div', {
@@ -21287,9 +21383,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "refresh": _vm.handleRefresh
     }
-  }, [_vm._t("refreshSlot"), (_vm.refreshSlot) ? _c('loading-indicator', {
+  }, [_c('div', {
+    ref: "refreshSlot"
+  }, [_vm._t("refreshSlot")], 2), (!_vm.refreshSlot) ? _c('loading-indicator', {
     staticClass: ["indicator"]
-  }) : _vm._e()], 2), _c('div', {
+  }) : _vm._e()]), _c('div', {
     style: {
       minHeight: (_vm.pageHeight + 1) + 'px'
     }
@@ -21300,8 +21398,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 2), _c('loading', {
     staticClass: ["loading"],
     style: {
-      width: _vm.deviceWidth + 'px',
-      bottom: (_vm.bottomHeight + 1) + 'px'
+      width: _vm.deviceWidth + 'px'
     },
     attrs: {
       "display": _vm.loading ? 'show' : 'hide'
@@ -21309,9 +21406,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "loading": _vm.handleLoading
     }
-  }, [_vm._t("loadingSlot"), (_vm.loadingSlot) ? _c('loading-indicator', {
-    staticClass: ["indicator"]
-  }) : _vm._e()], 2)])])
+  }, [_c('div', {
+    ref: "loadingSlot"
+  }, [_vm._t("loadingSlot")], 2), (!_vm.loadingSlot) ? _c('loading-indicator', {
+    staticClass: ["indicator-loading"],
+    style: {
+      bottom: _vm.bottomHeight + 'px'
+    }
+  }) : _vm._e()])])]) : _vm._e(), _c('wxc-loading', {
+    attrs: {
+      "show": !_vm.isShow,
+      "type": "default"
+    }
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
@@ -21475,7 +21582,6 @@ exports.default = {
             });
         }
         if (this.defaultIndex) this.$data.currentIndex = this.defaultInde;
-        this.$data.deviceWidth = WXEnvironment.deviceWidth;
         this.$data.deviceHeight = WXEnvironment.deviceHeight;
     },
 
@@ -21667,9 +21773,6 @@ exports.default = {
             currentIndex: 0
         };
     },
-    created: function created() {
-        this.$data.deviceWidth = WXEnvironment.deviceWidth;
-    },
 
     methods: {
         handleScroll: function handleScroll(e) {},
@@ -21713,7 +21816,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     })
   })), _c('div', {
-    staticClass: ["options"]
+    staticClass: ["options"],
+    style: {
+      width: _vm.deviceWidth + 'px'
+    }
   }, _vm._l((_vm.setting), function(item, index) {
     return _c('div', {
       class: ['orb', index === _vm.currentIndex ? 'active' : ' '],
@@ -21743,6 +21849,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "slot": "index",
       "refreshing": _vm.refreshing,
+      "isShow": _vm.isShow,
       "loading": _vm.loading,
       "navbarHeight": 90
     },
@@ -21764,12 +21871,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "setting": _vm.bannerSetting
     }
-  })], 1), _c('div', {
+  }), _c('div', {
+    staticStyle: {
+      height: "1000px",
+      backgroundColor: "#000"
+    }
+  })], 1), _c('Page', {
     attrs: {
       "slot": "my"
     },
     slot: "my"
-  }, [_c('Page', [_c('div', [_vm._v("222")])])], 1)], 1)
+  }, [_c('div', [_vm._v("222")])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
