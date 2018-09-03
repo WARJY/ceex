@@ -6,14 +6,16 @@
         <div :style="{height:navHeight + 'px'}"></div>
         <scroller class="page" :style="{width:deviceWidth + 'px',minHeight:pageHeight + 'px'}" @loadmore="handleLoading">
             <refresh class="refresh" :style="{width:deviceWidth + 'px'}" @refresh="handleRefresh" :display="refreshing ? 'show' : 'hide'">
-                <loading-indicator class="indicator"></loading-indicator>
+                <slot name="refreshSlot" ref="refreshSlot"></slot>
+                <loading-indicator class="indicator" v-if="refreshSlot"></loading-indicator>
             </refresh>
             <div :style="{minHeight:(pageHeight + 1) + 'px'}">
                 <slot></slot>
                 <div :style="{height:bottomHeight + 'px'}"></div>
             </div>
             <loading class="loading" :style="{width:deviceWidth + 'px',bottom:(bottomHeight + 1) + 'px'}" @loading="handleLoading" :display="loading ? 'show' : 'hide'">
-                <loading-indicator class="indicator"></loading-indicator>
+                <slot name="loadingSlot" ref="loadingSlot"></slot>
+                <loading-indicator class="indicator" v-if="loadingSlot"></loading-indicator>
             </loading>
         </scroller >
     </div>
@@ -43,7 +45,9 @@
                 deviceHeight:1334,
                 pageHeight:1106,
                 navHeight:90,
-                bottomHeight:98
+                bottomHeight:0,
+                refreshSlot:true,
+                loadingSlot:true
             }
         },
         created(){
@@ -54,7 +58,11 @@
         ready(){
            let navHeight = this.$refs.nav.offsetHeight
            this.$data.navHeight = navHeight
-           this.$data.pageHeight = this.$data.deviceHeight - navHeight - this.$data.bottomHeight - 40
+           this.$data.pageHeight = this.$data.deviceHeight - navHeight - this.navbarHeight - 40
+           let refreshSlot = this.$refs.refreshSlot
+           let loadingSlot = this.$refs.loadingSlot
+           if(refreshSlot.offsetHeight > 0) this.$data.refreshSlot = true
+           if(loadingSlot.offsetHeight > 0) this.$data.loadingSlot = true
         },
         methods:{
             handleRefresh(e){
