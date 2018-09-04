@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-if="isShow">
+		<div class="container" v-if="isShow">
 			<div class="nav" ref="nav">
 				<slot name="nav"></slot>
 			</div>
@@ -29,9 +29,7 @@
 </template>
 
 <script>
-	import {
-		WxcLoading
-	} from 'weex-ui';
+	import { WxcLoading } from 'weex-ui';
 	const modal = weex.requireModule('modal')
 	const dom = weex.requireModule('dom')
 	export default {
@@ -55,7 +53,7 @@
 			}
 		},
 		components: {
-			WxcLoading: WxcLoading
+			WxcLoading:WxcLoading
 		},
 		data() {
 			return {
@@ -137,12 +135,16 @@
 </script>
 
 <style scoped>
+	.container{
+		position: relative;
+	}
+	
 	.page {
 		background-color: #f5f5f5;
 	}
 
 	.nav {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		z-index: 100;
 	}

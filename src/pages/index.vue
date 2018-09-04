@@ -1,12 +1,13 @@
 <template>
-	<NavMain :iconfont="iconfont" :setting="navSetting" :styleDefault="styleDefault" :styleActive="styleActive">
-		<Page slot="index" :refreshing="refreshing" :isShow="isShow" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading" :navbarHeight="90">
-			<wxc-minibar slot="nav" title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多"></wxc-minibar>
+	<NavMain :iconfont="iconfont" :setting="navSetting" :styleDefault="styleDefault" :styleActive="styleActive" @switch="handleSwitch">
+		<div slot="index">
+			<Page :isShow="showindex" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading" :navbarHeight="90">
+				<wxc-minibar slot="nav" title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多"></wxc-minibar>
+				<Banner :setting="bannerSetting" />
+			</Page>
+		</div>
+		<Page slot="my" :isShow="showmy" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading" :navbarHeight="90">
 			<Banner :setting="bannerSetting" />
-			<div style="height: 1000px;background-color: #000;"></div>
-		</Page>
-		<Page slot="my">
-			<div>222</div>
 		</Page>
 	</NavMain>
 </template>
@@ -30,7 +31,8 @@
 			return {
 				refreshing: false,
 				loading: false,
-				isShow: false,
+				showindex: false,
+				showmy: false,
 				iconfont: "//at.alicdn.com/t/font_811848_qrm8hrhlfkg.ttf",
 				navSetting: [
 					{
@@ -85,9 +87,7 @@
 			}
 		},
 		mounted: function () {
-			setTimeout(() => {
-				this.$data.isShow = true
-			}, 1000)
+			
 		},
 		methods: {
 			handleRefresh: function () {
@@ -101,6 +101,18 @@
 				setTimeout(() => {
 					this.$data.loading = false
 				}, 1000)
+			},
+			handleSwitch: function(e){
+				if(e.load){
+					this.$data.showLoading = true
+					setTimeout(()=>{
+						for(let i in e.switch){
+							this.$data["show" + i] = e.switch[i]
+							this.$forceUpdate()
+						}
+						this.$data.showLoading = false
+					},1000)
+				}
 			}
 		}
 	}
