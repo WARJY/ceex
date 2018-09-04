@@ -1305,6 +1305,72 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _index = __webpack_require__(34);
+
+Object.defineProperty(exports, 'default', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_index).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(197)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(198)
+
+/* template */
+var __vue_template__ = __webpack_require__(199)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "D:\\workspace-node\\ceex\\node_modules\\weex-ui\\packages\\wxc-rich-text\\wxc-rich-text-text.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-7cb75ac2"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.WxcTag = exports.WxcTabPage = exports.WxcTabBar = exports.WxcStepper = exports.WxcSpecialRichText = exports.WxcSliderBar = exports.WxcSlideNav = exports.WxcSimpleFlow = exports.WxcSearchbar = exports.WxcRichText = exports.WxcResult = exports.WxcRefresher = exports.WxcRadio = exports.WxcProgress = exports.WxcPopup = exports.WxcPopover = exports.WxcPartLoading = exports.WxcPanItem = exports.WxcPageCalendar = exports.WxcOverlay = exports.WxcNoticebar = exports.WxcMinibar = exports.WxcMask = exports.WxcLotteryRain = exports.WxcLoading = exports.WxcLightbox = exports.WxcIndexlist = exports.WxcIcon = exports.WxcGridSelect = exports.WxcFullPage = exports.WxcEpSlider = exports.WxcDialog = exports.WxcCountdown = exports.WxcCity = exports.WxcCheckboxList = exports.WxcCheckbox = exports.WxcCell = exports.WxcButton = exports.Utils = exports.BindEnv = undefined;
 
 var _bindEnv = __webpack_require__(24);
@@ -1319,7 +1385,7 @@ var _wxcButton = __webpack_require__(28);
 
 var _wxcButton2 = _interopRequireDefault(_wxcButton);
 
-var _wxcCell = __webpack_require__(5);
+var _wxcCell = __webpack_require__(4);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -1514,72 +1580,6 @@ exports.WxcStepper = _wxcStepper2.default;
 exports.WxcTabBar = _wxcTabBar2.default;
 exports.WxcTabPage = _wxcTabPage2.default;
 exports.WxcTag = _wxcTag2.default;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _index = __webpack_require__(34);
-
-Object.defineProperty(exports, 'default', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_index).default;
-  }
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __vue_exports__, __vue_options__
-var __vue_styles__ = []
-
-/* styles */
-__vue_styles__.push(__webpack_require__(197)
-)
-
-/* script */
-__vue_exports__ = __webpack_require__(198)
-
-/* template */
-var __vue_template__ = __webpack_require__(199)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
-}
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "D:\\workspace-node\\ceex\\node_modules\\weex-ui\\packages\\wxc-rich-text\\wxc-rich-text-text.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-7cb75ac2"
-__vue_options__.style = __vue_options__.style || {}
-__vue_styles__.forEach(function (module) {
-  for (var name in module) {
-    __vue_options__.style[name] = module[name]
-  }
-})
-if (typeof __register_static_styles__ === "function") {
-  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
-}
-
-module.exports = __vue_exports__
-
 
 /***/ }),
 /* 7 */
@@ -4537,15 +4537,15 @@ var _Page = __webpack_require__(21);
 
 var _Page2 = _interopRequireDefault(_Page);
 
-var _NavMain = __webpack_require__(252);
+var _TabBar = __webpack_require__(252);
 
-var _NavMain2 = _interopRequireDefault(_NavMain);
+var _TabBar2 = _interopRequireDefault(_TabBar);
 
 var _Banner = __webpack_require__(256);
 
 var _Banner2 = _interopRequireDefault(_Banner);
 
-var _weexUi = __webpack_require__(4);
+var _weexUi = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4568,7 +4568,7 @@ exports.default = {
 	name: "index",
 	components: {
 		Page: _Page2.default,
-		NavMain: _NavMain2.default,
+		TabBar: _TabBar2.default,
 		Banner: _Banner2.default,
 		WxcMinibar: _weexUi.WxcMinibar
 	},
@@ -4645,14 +4645,12 @@ exports.default = {
 		handleSwitch: function handleSwitch(e) {
 			var _this3 = this;
 
+			console.log(e);
 			if (e.load) {
-				this.$data.showLoading = true;
 				setTimeout(function () {
 					for (var i in e.switch) {
 						_this3.$data["show" + i] = e.switch[i];
-						_this3.$forceUpdate();
 					}
-					_this3.$data.showLoading = false;
 				}, 1000);
 			}
 		}
@@ -4759,7 +4757,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _weexUi = __webpack_require__(4);
+var _weexUi = __webpack_require__(6);
 
 var modal = weex.requireModule('modal'); //
 //
@@ -4794,7 +4792,7 @@ var modal = weex.requireModule('modal'); //
 
 var dom = weex.requireModule('dom');
 exports.default = {
-	name: "page",
+	name: "Page",
 	props: {
 		refreshing: {
 			type: Boolean,
@@ -4811,6 +4809,14 @@ exports.default = {
 		isShow: {
 			type: Boolean,
 			default: false
+		},
+		refreshSlot: {
+			type: Boolean,
+			default: false
+		},
+		loadSlot: {
+			type: Boolean,
+			default: false
 		}
 	},
 	components: {
@@ -4823,8 +4829,6 @@ exports.default = {
 			pageHeight: 0,
 			navHeight: 0,
 			bottomHeight: 0,
-			refreshSlot: false,
-			loadingSlot: false,
 			firstLoad: false
 		};
 	},
@@ -4834,7 +4838,6 @@ exports.default = {
 	},
 
 	watch: {
-		loading: function loading(val, old) {},
 		isShow: function isShow(val, old) {
 			var _this = this;
 
@@ -4851,31 +4854,12 @@ exports.default = {
 								}
 							});
 						} catch (e) {
-							j(false);
+							console.log("e");
 						}
 					});
-					var getRefreshSlot = new Promise(function (r, j) {
-						try {
-							dom.getComponentRect(_this.$refs.refreshSlot, function (option) {
-								if (option.result === true) _this.$data.refreshSlot = true;
-								r(true);
-							});
-						} catch (e) {
-							j(false);
-						}
-					});
-					var getLoadingSlot = new Promise(function (r, j) {
-						try {
-							dom.getComponentRect(_this.$refs.loadingSlot, function (option) {
-								if (option.result === true) _this.$data.loadingSlot = true;
-								r(true);
-							});
-						} catch (e) {
-							j(false);
-						}
-					});
-					var process = [getNav, getRefreshSlot, getLoadingSlot];
+					var process = [getNav];
 					Promise.all(process).then(function (data) {
+						console.log(data);
 						var flag = true;
 						for (var i in data) {
 							if (data[i] !== true) flag = false;
@@ -6131,7 +6115,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _wxcCell = __webpack_require__(5);
+var _wxcCell = __webpack_require__(4);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -16248,7 +16232,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _wxcCell = __webpack_require__(5);
+var _wxcCell = __webpack_require__(4);
 
 var _wxcCell2 = _interopRequireDefault(_wxcCell);
 
@@ -16962,7 +16946,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
   components: {
-    WxcRichTextText: __webpack_require__(6),
+    WxcRichTextText: __webpack_require__(5),
     WxcRichTextLink: __webpack_require__(200),
     WxcRichTextIcon: __webpack_require__(203),
     WxcRichTextTag: __webpack_require__(14)
@@ -17232,7 +17216,7 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcRichTextText = __webpack_require__(6);
+var _wxcRichTextText = __webpack_require__(5);
 
 var _wxcRichTextText2 = _interopRequireDefault(_wxcRichTextText);
 
@@ -19431,7 +19415,7 @@ var _utils = __webpack_require__(0);
 
 var _utils2 = _interopRequireDefault(_utils);
 
-var _wxcRichTextText = __webpack_require__(6);
+var _wxcRichTextText = __webpack_require__(5);
 
 var _wxcRichTextText2 = _interopRequireDefault(_wxcRichTextText);
 
@@ -21398,9 +21382,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "refresh": _vm.handleRefresh
     }
-  }, [_c('div', {
+  }, [(_vm.refreshSlot) ? _c('div', {
     ref: "refreshSlot"
-  }, [_vm._t("refreshSlot")], 2), (!_vm.refreshSlot) ? _c('loading-indicator', {
+  }, [_vm._t("refreshSlot")], 2) : _vm._e(), (!_vm.refreshSlot) ? _c('loading-indicator', {
     staticClass: ["indicator"]
   }) : _vm._e()]), _c('div', {
     style: {
@@ -21421,9 +21405,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "loading": _vm.handleLoading
     }
-  }, [_c('div', {
+  }, [(_vm.loadSlot) ? _c('div', {
     ref: "loadingSlot"
-  }, [_vm._t("loadingSlot")], 2), (!_vm.loadingSlot) ? _c('loading-indicator', {
+  }, [_vm._t("loadingSlot")], 2) : _vm._e(), (!_vm.loadSlot) ? _c('loading-indicator', {
     staticClass: ["indicator-loading"],
     style: {
       bottom: _vm.bottomHeight + 'px'
@@ -21464,10 +21448,10 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "D:\\workspace-node\\ceex\\src\\components\\NavMain.vue"
+__vue_options__.__file = "D:\\workspace-node\\ceex\\src\\components\\TabBar.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-406620c8"
+__vue_options__._scopeId = "data-v-9f279d64"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -21571,7 +21555,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var domModule = weex.requireModule('dom');
 exports.default = {
-    name: 'navMain',
+    name: "TabBar",
     props: {
         setting: {
             type: Array,
@@ -21622,7 +21606,6 @@ exports.default = {
         this.$data.hasLoad = hasLoad;
         this.$emit("switch", { load: this.setting[this.$data.currentIndex], switch: hasLoad });
     },
-    updated: function updated() {},
 
     methods: {
         handleSwitch: function handleSwitch(index) {
@@ -21893,7 +21876,7 @@ module.exports.render._withStripped = true
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('NavMain', {
+  return _c('tab-bar', {
     attrs: {
       "iconfont": _vm.iconfont,
       "setting": _vm.navSetting,
@@ -21903,13 +21886,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "switch": _vm.handleSwitch
     }
-  }, [_c('div', {
+  }, [_c('page', {
     attrs: {
-      "slot": "index"
-    },
-    slot: "index"
-  }, [_c('Page', {
-    attrs: {
+      "slot": "index",
       "isShow": _vm.showindex,
       "refreshing": _vm.refreshing,
       "loading": _vm.loading,
@@ -21918,7 +21897,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "refreshing": _vm.handleRefresh,
       "loadining": _vm.handleLoading
-    }
+    },
+    slot: "index"
   }, [_c('wxc-minibar', {
     attrs: {
       "slot": "nav",
@@ -21928,11 +21908,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "rightText": "更多"
     },
     slot: "nav"
-  }), _c('Banner', {
+  }), _c('banner', {
     attrs: {
       "setting": _vm.bannerSetting
     }
-  })], 1)], 1), _c('Page', {
+  })], 1), _c('page', {
     attrs: {
       "slot": "my",
       "isShow": _vm.showmy,
@@ -21945,7 +21925,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "loadining": _vm.handleLoading
     },
     slot: "my"
-  }, [_c('Banner', {
+  }, [_c('banner', {
     attrs: {
       "setting": _vm.bannerSetting
     }

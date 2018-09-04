@@ -11,7 +11,7 @@
         </div>
         <div class="nav-main">
             <!--字体图标-->
-            <div v-if="iconfont"  v-for="(item,index) in setting" class="nav-item" v-on:click="handleSwitch(index)">
+            <div v-if="iconfont" v-for="(item,index) in setting" class="nav-item" v-on:click="handleSwitch(index)">
                 <text :class="['icon',index===currentIndex?'active':'']" :style="[index===currentIndex?styleActive.icon:styleDefault.icon]">{{item.icon}}</text>
                 <text :class="['title',index===currentIndex?'active':'']" :style="[index===currentIndex?styleActive.title:styleDefault.title]">{{item.title}}</text>
             </div>
@@ -27,7 +27,7 @@
 <script>
     const domModule = weex.requireModule('dom')
     export default {
-        name:'navMain',
+		name:"TabBar",
         props:{
             setting:{
                 type:Array,
@@ -78,9 +78,6 @@
 			this.$data.hasLoad = hasLoad
 			this.$emit("switch",{load:this.setting[this.$data.currentIndex],switch:hasLoad})
         },
-		updated(){
-			
-		},
         methods:{
             handleSwitch(index){
 				let name = this.setting[index].name
