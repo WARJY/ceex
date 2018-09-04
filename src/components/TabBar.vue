@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="nav-content" :style="{minHeight:deviceHeight + 'px'}">
-			<div class="nav-container" :style="{width:750*setting.length + 'px',height:deviceHeight + 'px',left:currentIndex*-750 + 'px'}">
+			<div class="nav-container" ref="nav" :style="{width:750*setting.length + 'px',height:deviceHeight + 'px',transform:`translateX(${tranlateX})`}">
 				<div v-for="(item,index) in setting">
 					<div class="nav-tab" :style="{minHeight:deviceHeight + 'px'}">
 						<slot :name="item.name"></slot>
@@ -26,6 +26,7 @@
 
 <script>
     const domModule = weex.requireModule('dom')
+	const animation = weex.requireModule('animation')
     export default {
 		name:"TabBar",
         props:{
@@ -34,6 +35,10 @@
                 required:true
             },
             defaultIndex:Number,
+			duration:{
+				type:Number,
+				default:0
+			},
             iconfont:String,
             styleDefault:{
                 type:Object,
@@ -58,15 +63,33 @@
             return {
                 currentIndex:0,
                 deviceHeight:0,
-				hasLoad:{}
+				hasLoad:{},
+				tranlateX:0
             }
         },
+		watch:{
+			currentIndex(val,old){
+				if(val >= 0){
+					let nav = this.$refs.nav
+					if(this.duration > 0){
+						animation.transition(nav, {
+						  styles: {
+							transform: `translateX(${-750*val}px)`,
+						  },
+						  duration: this.duration
+						})
+					}else{
+						this.$data.tranlateX = -750*val + 'px'
+					}
+				}
+			}
+		},
         created(){
             if(this.iconfont){
                 domModule.addRule('fontFace', {
                     'fontFamily': "iconfont",
                     'src': "url('" + this.iconfont + "')"
-                });
+                })
             }
             if(this.defaultIndex) this.$data.currentIndex = this.defaultInde
             this.$data.deviceHeight = WXEnvironment.deviceHeight

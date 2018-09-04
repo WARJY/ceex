@@ -7,6 +7,7 @@
 		</page>
 		<page slot="my" :isShow="showmy" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading"
 		    :navbarHeight="90">
+			222
 		</page>
 	</tab-bar>
 </template>

@@ -4562,6 +4562,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
 	name: "index",
@@ -21551,6 +21552,7 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 var domModule = weex.requireModule('dom');
+var animation = weex.requireModule('animation');
 exports.default = {
     name: "TabBar",
     props: {
@@ -21559,6 +21561,10 @@ exports.default = {
             required: true
         },
         defaultIndex: Number,
+        duration: {
+            type: Number,
+            default: 0
+        },
         iconfont: String,
         styleDefault: {
             type: Object,
@@ -21583,8 +21589,27 @@ exports.default = {
         return {
             currentIndex: 0,
             deviceHeight: 0,
-            hasLoad: {}
+            hasLoad: {},
+            tranlateX: 0
         };
+    },
+
+    watch: {
+        currentIndex: function currentIndex(val, old) {
+            if (val >= 0) {
+                var nav = this.$refs.nav;
+                if (this.duration > 0) {
+                    animation.transition(nav, {
+                        styles: {
+                            transform: 'translateX(' + -750 * val + 'px)'
+                        },
+                        duration: this.duration
+                    });
+                } else {
+                    this.$data.tranlateX = -750 * val + 'px';
+                }
+            }
+        }
     },
     created: function created() {
         if (this.iconfont) {
@@ -21634,11 +21659,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       minHeight: _vm.deviceHeight + 'px'
     }
   }, [_c('div', {
+    ref: "nav",
     staticClass: ["nav-container"],
     style: {
       width: 750 * _vm.setting.length + 'px',
       height: _vm.deviceHeight + 'px',
-      left: _vm.currentIndex * -750 + 'px'
+      transform: ("translateX(" + _vm.tranlateX + ")")
     }
   }, _vm._l((_vm.setting), function(item, index) {
     return _c('div', [_c('div', {
@@ -21986,7 +22012,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "loadining": _vm.handleLoading
     },
     slot: "my"
-  })], 1)
+  }, [_vm._v("\n\t\t222\n\t")])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
