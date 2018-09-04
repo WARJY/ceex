@@ -1,5 +1,5 @@
 <template>
-	<tab-bar :iconfont="iconfont" :setting="navSetting" :styleDefault="styleDefault" :styleActive="styleActive" @switch="handleSwitch">
+	<tab-bar :iconfont="iconfont" :setting="navSetting" :index="0" :styleDefault="styleDefault" :styleActive="styleActive" @switch="handleSwitch">
 		<page slot="index" :isShow="showindex" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading"
 		    :navbarHeight="90">
 			<wxc-minibar slot="nav" title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多"></wxc-minibar>
@@ -13,9 +13,9 @@
 </template>
 
 <script>
-	import Page from "@/components/Page"
-	import TabBar from "@/components/TabBar"
-	import Banner from "@/components/Banner"
+	import Page from "@/components/Page/index.js"
+	import TabBar from "@/components/TabBar/index.js"
+	import Banner from "@/components/Banner/index.js"
 	import {
 		WxcMinibar
 	} from 'weex-ui';
@@ -104,9 +104,7 @@
 				console.log(e)
 				if (e.load) {
 					setTimeout(() => {
-						for (let i in e.switch) {
-							this.$data["show" + i] = e.switch[i]
-						}
+						this.$data["show" + e.load.name] = true
 					}, 1000)
 				}
 			}

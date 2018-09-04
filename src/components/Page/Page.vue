@@ -97,7 +97,6 @@
 						})
 						let process = [getNav]
 						Promise.all(process).then(data => {
-							console.log(data)
 							let flag = true
 							for (let i in data) {
 								if (data[i] !== true) flag = false
