@@ -4562,7 +4562,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
 
 exports.default = {
 	name: "index",
@@ -21192,7 +21191,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "loadining": _vm.handleLoading
     },
     slot: "my"
-  }, [_vm._v("\n\t\t222\n\t")])], 1)
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
@@ -21954,7 +21953,17 @@ module.exports = {
   "nav-item": {
     "alignItems": "center",
     "justifyContent": "center",
-    "flex": 1
+    "flex": 1,
+    "position": "relative"
+  },
+  "nav-slot": {
+    "position": "absolute",
+    "top": 0,
+    "left": 0,
+    "bottom": 0,
+    "right": 0,
+    "alignItems": "center",
+    "justifyContent": "center"
   },
   "icon": {
     "fontFamily": "iconfont",
@@ -21977,6 +21986,9 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+//
+//
+//
 //
 //
 //
@@ -22166,7 +22178,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _c('text', {
       class: ['title', index === _vm.currentIndex ? 'active' : ''],
       style: [index === _vm.currentIndex ? _vm.styleActive.title : _vm.styleDefault.title]
-    }, [_vm._v(_vm._s(item.title))])]) : _vm._e()])
+    }, [_vm._v(_vm._s(item.title))])]) : _vm._e(), _c('div', {
+      staticClass: ["nav-slot"]
+    }, [_vm._t(item.name + 'Bar')], 2)])
   }))])
 },staticRenderFns: []}
 module.exports.render._withStripped = true

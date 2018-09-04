@@ -21,6 +21,9 @@
 					<image class="icon" :src="index===currentIndex?item.activeIcon:item.icon" :style="[index===currentIndex?styleActive.icon:styleDefault.icon]"></image>
 					<text :class="['title',index===currentIndex?'active':'']" :style="[index===currentIndex?styleActive.title:styleDefault.title]">{{item.title}}</text>
 				</div>
+				<div class="nav-slot">
+					<slot :name="item.name + 'Bar'"></slot>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -176,6 +179,17 @@
 		align-items: center;
 		justify-content: center;
 		flex: 1;
+		position: relative;
+	}
+	
+	.nav-slot{
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.icon {
