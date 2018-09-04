@@ -4562,7 +4562,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
 
 exports.default = {
 	name: "index",
@@ -4588,17 +4587,15 @@ exports.default = {
 				icon: "\uE75E;",
 				title: "我的"
 			}],
-			// 				navSetting: [{
-			// 						icon: "https://vuejs.org/images/logo.p ng",
-			// 						activeIcon: " ",
-			// 						title: "首页"
-			// 					},
-			// 					{
-			// 						icon: "https://vuejs.org/images/logo.png",
-			// 						activeIcon: " ",
-			// 						title: "首页"
-			// 					}
-			// 				],
+			navSetting2: [{
+				icon: "https://vuejs.org/images/logo.p ng",
+				activeIcon: " ",
+				title: "首页"
+			}, {
+				icon: "https://vuejs.org/images/logo.png",
+				activeIcon: " ",
+				title: "首页"
+			}],
 			styleDefault: {
 				icon: {
 					color: '#333'
@@ -4624,7 +4621,7 @@ exports.default = {
 			}]
 		};
 	},
-	mounted: function mounted() {},
+
 	methods: {
 		handleRefresh: function handleRefresh() {
 			var _this = this;
@@ -21738,14 +21735,20 @@ module.exports = __vue_exports__
 /***/ (function(module, exports) {
 
 module.exports = {
+  "banner-view": {
+    "width": "750",
+    "position": "relative",
+    "overflow": "hidden"
+  },
   "banner": {
-    "height": "270",
-    "flexDirection": "row"
+    "flexDirection": "row",
+    "position": "relative"
   },
   "image": {
-    "height": "270"
+    "width": "750"
   },
   "options": {
+    "width": "750",
     "flexDirection": "row",
     "justifyContent": "center",
     "alignItems": "center",
@@ -21776,8 +21779,9 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
+//
 //
 //
 //
@@ -21792,36 +21796,80 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 var dom = weex.requireModule('dom');
-var modal = weex.requireModule('modal');
+var navigator = weex.requireModule('navigator');
 exports.default = {
-    name: "banner",
-    props: {
-        setting: {
-            type: Array,
-            required: true,
-            default: function _default() {
-                return [];
-            }
-        }
-    },
-    data: function data() {
-        return {
-            deviceWidth: 750,
-            deviceHeight: 1334,
-            currentIndex: 0
-        };
-    },
+	name: "banner",
+	props: {
+		setting: {
+			type: Array,
+			required: true,
+			default: []
+		},
+		width: {
+			type: Number,
+			default: 750
+		},
+		height: {
+			type: Number,
+			default: 270
+		}
+	},
+	data: function data() {
+		return {
+			currentIndex: 0,
+			lastScroll: 0,
+			anmFinish: true
+		};
+	},
 
-    methods: {
-        handleScroll: function handleScroll(e) {},
-        handleOrb: function handleOrb(index) {
-            if (index) {
-                var el = this.$refs['image' + index][0];
-                dom.scrollToElement(el, {});
-                this.$data.currentIndex = index;
-            }
-        }
-    }
+	watch: {
+		currentIndex: function currentIndex(val, old) {
+			var _this = this;
+
+			if (val >= 0 && this.$data.anmFinish === true) {
+				var el = this.$refs['image' + val][0];
+				dom.scrollToElement(el, {});
+				this.$data.anmFinish = false;
+				this.$emit("switch", this.setting[val]);
+			}
+			setTimeout(function () {
+				_this.$data.anmFinish = true;
+			}, 300);
+		}
+	},
+	methods: {
+		handleScroll: function handleScroll(e) {
+			var x = e.contentOffset.x;
+			var index = this.$data.currentIndex;
+			var abs = Math.abs(x - this.$data.lastScroll);
+			if (abs > 100) {
+				if (x < this.$data.lastScroll) {
+					if (this.$data.anmFinish && this.setting.length - 1 >= index + 1) this.$data.currentIndex = index + 1;
+				} else {
+					if (this.$data.anmFinish && index - 1 >= 0) this.$data.currentIndex = index - 1;
+				}
+				this.$data.lastScroll = x;
+			}
+		},
+		handleOrb: function handleOrb(index) {
+			if (index) {
+				var el = this.$refs['image' + index][0];
+				dom.scrollToElement(el, {});
+				this.$data.currentIndex = index;
+			}
+		},
+		handleClick: function handleClick(index) {
+			var current = this.setting[index];
+			if (current.url) {
+				navigator.push({
+					url: current.url,
+					animated: "true"
+				}, function (event) {});
+			} else {
+				this.$emit("tap", current);
+			}
+		}
+	}
 };
 
 /***/ }),
@@ -21829,11 +21877,14 @@ exports.default = {
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('scroller', {
-    staticClass: ["banner"],
+  return _c('div', [_c('div', {
+    staticClass: ["banner-view"],
     style: {
-      width: _vm.deviceWidth + 'px'
-    },
+      width: _vm.width + 'px',
+      height: _vm.height + 'px'
+    }
+  }, [_c('scroller', {
+    staticClass: ["banner"],
     attrs: {
       "showScrollbar": "false",
       "scrollDirection": "horizontal"
@@ -21847,16 +21898,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       refInFor: true,
       staticClass: ["image"],
       style: {
-        width: _vm.deviceWidth + 'px'
+        width: _vm.width + 'px',
+        height: _vm.height + 'px'
       },
       attrs: {
         "src": item.src
+      },
+      on: {
+        "click": function($event) {
+          _vm.handleClick(index)
+        }
       }
     })
   })), _c('div', {
     staticClass: ["options"],
     style: {
-      width: _vm.deviceWidth + 'px'
+      width: _vm.width + 'px'
     }
   }, _vm._l((_vm.setting), function(item, index) {
     return _c('div', {
@@ -21867,7 +21924,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     })
-  }))])
+  }))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
@@ -21911,6 +21968,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _c('banner', {
     attrs: {
       "setting": _vm.bannerSetting
+    },
+    on: {
+      "switch": function($event) {},
+      "tap": function($event) {}
     }
   })], 1), _c('page', {
     attrs: {
@@ -21925,11 +21986,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "loadining": _vm.handleLoading
     },
     slot: "my"
-  }, [_c('banner', {
-    attrs: {
-      "setting": _vm.bannerSetting
-    }
-  })], 1)], 1)
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 

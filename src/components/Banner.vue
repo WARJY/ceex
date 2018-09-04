@@ -1,38 +1,69 @@
 <template>
     <div>
-        <scroller class="banner" :style="{width:deviceWidth + 'px'}" show-scrollbar="false" scroll-direction="horizontal" @scroll="handleScroll">
-            <image class="image" v-for="(item,index) in setting" :src="item.src" :style="{width:deviceWidth + 'px'}" :ref="'image' + index"></image>
-        </scroller>
-        <div class="options" :style="{width:deviceWidth + 'px'}">
-            <div v-for="(item,index) in setting" :class="['orb',index===currentIndex?'active':' ']" @click="handleOrb(index)"></div>
+		<div class="banner-view" :style="{width:width + 'px',height:height + 'px'}">
+			<scroller class="banner" show-scrollbar="false" scroll-direction="horizontal" @scroll="handleScroll">
+				<image class="image" v-for="(item,index) in setting" :src="item.src" :style="{width:width + 'px',height:height + 'px'}" :ref="'image' + index" @click="handleClick(index)"></image>
+			</scroller>
+			<div class="options" :style="{width:width + 'px'}">
+				<div v-for="(item,index) in setting" :class="['orb',index===currentIndex?'active':' ']" @click="handleOrb(index)"></div>
+			</div>
         </div>
     </div>
-
 </template>
 
 <script>
     const dom = weex.requireModule('dom')
-    const modal = weex.requireModule('modal')
+	const navigator = weex.requireModule('navigator')
     export default {
         name: "banner",
         props: {
             setting: {
                 type: Array,
                 required: true,
-                default: () => {
-                    return []
-                }
-            }
+                default:[]
+            },
+			width:{
+				type:Number,
+				default:750
+			},
+			height:{
+				type:Number,
+				default:270
+			}
         },
         data() {
             return {
-                deviceWidth: 750,
-                deviceHeight: 1334,
-                currentIndex: 0
+                currentIndex: 0,
+				lastScroll:0,
+				anmFinish:true
             }
         },
+		watch:{
+			currentIndex(val,old){
+				if(val>=0 && this.$data.anmFinish === true){
+				const el = this.$refs['image' + val][0]
+					dom.scrollToElement(el, {})
+					this.$data.anmFinish = false
+					this.$emit("switch",this.setting[val])
+				}
+				setTimeout(()=>{
+					this.$data.anmFinish = true
+				},300)
+			}
+		},
         methods: {
             handleScroll(e) {
+				let x = e.contentOffset.x
+				let index = this.$data.currentIndex
+				let abs = Math.abs(x - this.$data.lastScroll)
+				if(abs > 100){
+					if(x < this.$data.lastScroll){
+						if(this.$data.anmFinish && this.setting.length-1>=index+1) this.$data.currentIndex = index + 1
+					}else{
+						if(this.$data.anmFinish && index-1 >=0) this.$data.currentIndex = index - 1
+					}
+					this.$data.lastScroll = x
+				}
             },
             handleOrb(index) {
                 if(index) {
@@ -40,22 +71,40 @@
                     dom.scrollToElement(el, {})
                     this.$data.currentIndex = index
                 }
-            }
+            },
+			handleClick(index){
+				let current = this.setting[index]
+				if(current.url){
+					navigator.push({
+					  url: current.url,
+					  animated: "true"
+					}, event => {})
+				}else{
+					this.$emit("tap",current)
+				}
+			}
         }
     }
 </script>
 
 <style scoped>
+	.banner-view{
+		width: 750px;
+		position: relative;
+		overflow: hidden;
+	}
+	
     .banner {
-        height: 270px;
         flex-direction: row;
+		position: relative;
     }
     
     .image {
-        height: 270px;
+		width:750px;
     }
     
     .options {
+		width: 750px;
         flex-direction: row;
         justify-content: center;
         align-items: center;
