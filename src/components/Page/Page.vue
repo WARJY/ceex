@@ -5,8 +5,8 @@
 				<slot name="nav"></slot>
 			</div>
 			<div :style="{height:navHeight + 'px'}"></div>
-			<scroller class="page" :style="{width:deviceWidth + 'px',minHeight:pageHeight + 'px'}" @loadmore="handleLoading">
-				<refresh class="refresh" :style="{width:deviceWidth + 'px'}" @refresh="handleRefresh" :display="refreshing ? 'show' : 'hide'">
+			<scroller class="page" :style="{width:deviceWidth + 'px',minHeight:pageHeight + 'px'}" @scroll="handleScroll">
+				<refresh class="refresh" :style="{width:deviceWidth + 'px'}" @refresh="handleRefresh" @pullingdown="handlePullDown" :display="refreshing ? 'show' : 'hide'">
 					<div v-if="refreshSlot" ref="refreshSlot">
 						<slot name="refreshSlot"></slot>
 					</div>
@@ -24,16 +24,22 @@
 				</loading>
 			</scroller>
 		</div>
-		<wxc-loading :show="!isShow" type="default"></wxc-loading>
+		<div v-if="!isShow">
+			<slot v-if="pageLoadSlot" name="pageLoading"></slot>
+			<wxc-loading :show="!pageLoadSlot" type="default"></wxc-loading>
+		</div>
 	</div>
 </template>
 
 <script>
-	import { WxcLoading } from 'weex-ui';
+	import { WxcLoading } from 'weex-ui'
 	const modal = weex.requireModule('modal')
 	const dom = weex.requireModule('dom')
 	export default {
 		name: "Page",
+		components:{
+			WxcLoading:WxcLoading
+		},
 		props: {
 			refreshing: {
 				type: Boolean,
@@ -49,19 +55,21 @@
 			},
 			isShow: {
 				type: Boolean,
+				required:true,
 				default: false
 			},
-			refreshSlot:{
+			refreshSlot: {
 				type: Boolean,
 				default: false
 			},
-			loadSlot:{
+			loadSlot: {
+				type: Boolean,
+				default: false
+			},
+			pageLoadSlot:{
 				type: Boolean,
 				default: false
 			}
-		},
-		components: {
-			WxcLoading:WxcLoading
 		},
 		data() {
 			return {
@@ -70,7 +78,7 @@
 				pageHeight: 0,
 				navHeight: 0,
 				bottomHeight: 0,
-				firstLoad:false
+				firstLoad: false
 			}
 		},
 		created() {
@@ -108,6 +116,12 @@
 			}
 		},
 		methods: {
+			handleScroll(e){
+				this.$emit("scroll",e)
+			},
+			handlePullDown(e){
+				this.$emit("pullDown",e)
+			},
 			handleRefresh(e) {
 				this.$emit("refreshing")
 			},
@@ -119,10 +133,10 @@
 </script>
 
 <style scoped>
-	.container{
+	.container {
 		position: relative;
 	}
-	
+
 	.page {
 		background-color: #f5f5f5;
 	}
@@ -155,8 +169,8 @@
 		width: 40px;
 		color: #00d2ff;
 	}
-	
-	.indicator-loading{
+
+	.indicator-loading {
 		height: 40px;
 		width: 40px;
 		color: #00d2ff;

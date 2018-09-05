@@ -1723,10 +1723,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-/**
- * Created by Tw93 on 2016/10/29.
- */
-
 var GIF = exports.GIF = 'https://img.alicdn.com/tfs/TB1aks3PpXXXXcXXFXXXXXXXXXX-150-150.gif';
 var BLACK_GIF = exports.BLACK_GIF = 'https://img.alicdn.com/tfs/TB1Ep_9NVXXXXb8XVXXXXXXXXXX-74-74.gif';
 var PART = exports.PART = 'https://gtms02.alicdn.com/tfs/TB1y4QbSXXXXXbgapXXXXXXXXXX-50-50.gif';
@@ -21689,10 +21685,16 @@ var modal = weex.requireModule('modal'); //
 //
 //
 //
+//
+//
+//
 
 var dom = weex.requireModule('dom');
 exports.default = {
 	name: "Page",
+	components: {
+		WxcLoading: _weexUi.WxcLoading
+	},
 	props: {
 		refreshing: {
 			type: Boolean,
@@ -21708,6 +21710,7 @@ exports.default = {
 		},
 		isShow: {
 			type: Boolean,
+			required: true,
 			default: false
 		},
 		refreshSlot: {
@@ -21717,10 +21720,11 @@ exports.default = {
 		loadSlot: {
 			type: Boolean,
 			default: false
+		},
+		pageLoadSlot: {
+			type: Boolean,
+			default: false
 		}
-	},
-	components: {
-		WxcLoading: _weexUi.WxcLoading
 	},
 	data: function data() {
 		return {
@@ -21770,6 +21774,12 @@ exports.default = {
 		}
 	},
 	methods: {
+		handleScroll: function handleScroll(e) {
+			this.$emit("scroll", e);
+		},
+		handlePullDown: function handlePullDown(e) {
+			this.$emit("pullDown", e);
+		},
 		handleRefresh: function handleRefresh(e) {
 			this.$emit("refreshing");
 		},
@@ -21800,7 +21810,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       minHeight: _vm.pageHeight + 'px'
     },
     on: {
-      "loadmore": _vm.handleLoading
+      "scroll": _vm.handleScroll
     }
   }, [_c('refresh', {
     staticClass: ["refresh"],
@@ -21811,7 +21821,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "display": _vm.refreshing ? 'show' : 'hide'
     },
     on: {
-      "refresh": _vm.handleRefresh
+      "refresh": _vm.handleRefresh,
+      "pullingdown": _vm.handlePullDown
     }
   }, [(_vm.refreshSlot) ? _c('div', {
     ref: "refreshSlot"
@@ -21843,12 +21854,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     style: {
       bottom: _vm.bottomHeight + 'px'
     }
-  }) : _vm._e()])])]) : _vm._e(), _c('wxc-loading', {
+  }) : _vm._e()])])]) : _vm._e(), (!_vm.isShow) ? _c('div', [(_vm.pageLoadSlot) ? _vm._t("pageLoading") : _vm._e(), _c('wxc-loading', {
     attrs: {
-      "show": !_vm.isShow,
+      "show": !_vm.pageLoadSlot,
       "type": "default"
     }
-  })], 1)
+  })], 2) : _vm._e()])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 
