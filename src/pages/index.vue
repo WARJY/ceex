@@ -75,7 +75,8 @@
 				},
 				bannerSetting: [
 					{
-						src: "https://vuejs.org/images/logo.png"
+						src: "https://vuejs.org/images/logo.png",
+						url: ""
 					},
 					{
 						src: "https://vuejs.org/images/logo.png"

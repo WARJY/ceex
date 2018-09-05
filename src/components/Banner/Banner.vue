@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="banner-box">
 		<div class="banner-view" :style="{width:width + 'px',height:height + 'px'}">
 			<scroller class="banner" show-scrollbar="false" scroll-direction="horizontal" @scroll="handleScroll">
 				<image class="image" v-for="(item,index) in setting" :src="item.src" :style="{width:width + 'px',height:height + 'px'}" :ref="'image' + index"
@@ -89,6 +89,13 @@
 </script>
 
 <style scoped>
+	.banner-box{
+		width:750px;
+		position: relative;
+		justify-content: center;
+		align-items: center;
+	}
+	
 	.banner-view {
 		width: 750px;
 		position: relative;

@@ -17,25 +17,27 @@
 </template>
 <script>
 export default {
-	data:{
-		iconfont:"https://xxxx.ttf"
-		//字体图标时的setting结构
-		iconfontSetting = {
-			{name: "index",icon: "\ue751;",title: "首页"},
-			{name: "my",icon: "\ue75e;",title: "我的"}
-		},
-		//图片图标时的setting结构
-		imgSetting = {
-			{name："index",icon: "https://vuejs.org/images/logo.png",activeIcon: " ",title: "首页"},
-			{name："my",icon: "https://vuejs.org/images/logo.png",activeIcon: " ",title: "首页"}
-		},
-		//传入的style结构
-		styleDefault: {
-			icon: {
-				color: '#333'
+	data(){
+		return{
+			iconfont:"https://xxxx.ttf"
+			//字体图标时的setting结构
+			iconfontSetting = {
+				{name: "index",icon: "\ue751;",title: "首页"},
+				{name: "my",icon: "\ue75e;",title: "我的"}
 			},
-			title: {
-				color: '#333'
+			//图片图标时的setting结构
+			imgSetting = {
+				{name："index",icon: "https://vuejs.org/images/logo.png",activeIcon: " ",title: "首页"},
+				{name："my",icon: "https://vuejs.org/images/logo.png",activeIcon: " ",title: "首页"}
+			},
+			//传入的style结构
+			styleDefault: {
+				icon: {
+					color: '#333'
+				},
+				title: {
+					color: '#333'
+				}
 			}
 		}
 	}
