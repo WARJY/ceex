@@ -4615,6 +4615,14 @@ exports.default = {
 				src: "https://vuejs.org/images/logo.png",
 				title: "晚餐",
 				url: " "
+			}, {
+				src: "https://vuejs.org/images/logo.png",
+				title: "晚餐",
+				url: " "
+			}, {
+				src: "https://vuejs.org/images/logo.png",
+				title: "晚餐",
+				url: " "
 			}]
 		};
 	},
@@ -22225,12 +22233,17 @@ exports.default = {
 			default: function _default() {
 				return [];
 			}
+		},
+		styleDefault: {
+			type: Object,
+			default: function _default() {
+				return {
+					icon: {},
+					title: {}
+				};
+			}
 		}
 	},
-	data: function data() {
-		return {};
-	},
-
 	computed: {
 		itemWidth: function itemWidth() {
 			return 750 / this.row + 'px';
@@ -22238,16 +22251,19 @@ exports.default = {
 	},
 	methods: {
 		handleTap: function handleTap(index) {
+			var _this = this;
+
 			if (index >= 0) {
-				if (this.setting[index].url) {
+				var current = this.setting[index];
+				if (current.url) {
 					navigator.push({
-						url: 'http://dotwe.org/raw/dist/519962541fcf6acd911986357ad9c2ed.js',
+						url: current.url,
 						animated: "true"
 					}, function (event) {
-						modal.toast({
-							message: 'callback: ' + event
-						});
+						_this.$emit("tap", current);
 					});
+				} else {
+					this.$emit("tap", current);
 				}
 			}
 		}
@@ -22274,11 +22290,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('image', {
       staticClass: ["icon"],
+      style: _vm.styleDefault.icon,
       attrs: {
         "src": item.src
       }
     }), _c('text', {
-      staticClass: ["title"]
+      staticClass: ["title"],
+      style: _vm.styleDefault.title
     }, [_vm._v(_vm._s(item.title))])])
   }))
 },staticRenderFns: []}
