@@ -1,27 +1,14 @@
-# Introduction
+# Ceex
 
-This boilerplate is targeted towards large, serious projects and assumes you are somewhat familiar with Webpack and `weex-loader`. 
+Ceex是一款集成度较高的功能型weex组件库，与一般UI组件库不同的是ceex提供了更高层组件的封装及良好的扩展性。旨在为weex开发者提供更加舒适快捷的开发体验
 
-## Quickstart
+## 注意
 
-To use this template, scaffold a project with [weexpack v1.1.1+](https://github.com/weexteam/weex-pack).
+- 本组件库的一部分组件依赖于weex-ui，使用前请阅读组件README文件
 
-``` bash
-$ npm install -g weex-toolkit
-$ weex create my-project # default will create the webpack template
-$ cd my-project && npm start
-```
-
-## How to use less/sass/pug
-
-Take `sass` for example:
+## 快速启动
 
 ```
-$ npm i node-sass sass-loader --save
+`$ npm install`
+`$ cd npm start`
 ```
-
-Then, you just need to change the `style` tag as: `<style lang="sass"><style>`.
-
-## How to create your own template
-
-See [How-to-create-your-own-template](https://github.com/weex-templates/How-to-create-your-own-template).
