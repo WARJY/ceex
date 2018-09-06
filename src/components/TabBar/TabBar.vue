@@ -37,12 +37,17 @@
 		props: {
 			setting: {
 				type: Array,
-				required: true
+				required: true,
+				default(){
+					return []
+				}
 			},
 			index: Number,
 			duration: {
 				type: Number,
-				default: 0
+				default(){
+					return 0
+				}
 			},
 			iconfont: String,
 			styleDefault: {

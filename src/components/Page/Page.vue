@@ -43,32 +43,46 @@
 		props: {
 			refreshing: {
 				type: Boolean,
-				default: false
+				default(){
+					return false
+				}
 			},
 			loading: {
 				type: Boolean,
-				default: false
+				default(){
+					return false
+				}
 			},
 			navbarHeight: {
 				type: Number,
-				default: 90
+				default(){
+					return 90
+				}
 			},
 			isShow: {
 				type: Boolean,
 				required:true,
-				default: false
+				default(){
+					return false
+				}
 			},
 			refreshSlot: {
 				type: Boolean,
-				default: false
+				default(){
+					return false
+				}
 			},
 			loadSlot: {
 				type: Boolean,
-				default: false
+				default(){
+					return false
+				}
 			},
 			pageLoadSlot:{
 				type: Boolean,
-				default: false
+				default(){
+					return false
+				}
 			}
 		},
 		data() {

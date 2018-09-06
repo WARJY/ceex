@@ -21,15 +21,21 @@
 			setting: {
 				type: Array,
 				required: true,
-				default: []
+				default(){
+					return []
+				}
 			},
 			width: {
 				type: Number,
-				default: 750
+				default(){
+					return 750
+				}
 			},
 			height: {
 				type: Number,
-				default: 270
+				default(){
+					return 270
+				}
 			}
 		},
 		data() {
@@ -74,14 +80,18 @@
 				}
 			},
 			handleClick(index) {
-				let current = this.setting[index]
-				if (current.url) {
-					navigator.push({
-						url: current.url,
-						animated: "true"
-					}, event => {})
-				} else {
-					this.$emit("tap", current)
+				if(index >= 0){
+					let current = this.setting[index]
+					if (current.url) {
+						navigator.push({
+							url: current.url,
+							animated: "true"
+						}, event => {
+							this.$emit("tap", current)
+						})
+					} else {
+						this.$emit("tap", current)
+					}
 				}
 			}
 		}

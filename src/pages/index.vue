@@ -4,6 +4,7 @@
 		    :navbarHeight="90">
 			<wxc-minibar slot="nav" title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多"></wxc-minibar>
 			<banner :setting="bannerSetting" @switch="" @tap="" />
+			<menu :row="4" :setting="menuSetting" />
 		</page>
 		<page slot="my" :isShow="showmy" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading"
 		    :navbarHeight="90">
@@ -15,6 +16,7 @@
 	import Page from "@/components/Page/index.js"
 	import TabBar from "@/components/TabBar/index.js"
 	import Banner from "@/components/Banner/index.js"
+	import Menu from "@/components/Menu/index.js"
 	import {
 		WxcMinibar
 	} from 'weex-ui';
@@ -24,7 +26,8 @@
 			Page: Page,
 			TabBar: TabBar,
 			Banner: Banner,
-			WxcMinibar: WxcMinibar
+			WxcMinibar: WxcMinibar,
+			Menu:Menu
 		},
 		data() {
 			return {
@@ -84,6 +87,18 @@
 					{
 						src: "https://vuejs.org/images/logo.png"
 					}
+				],
+				menuSetting:[
+					{
+						src: "https://vuejs.org/images/logo.png",
+						title: "午餐",
+						url: " "
+					},
+					{
+						src: "https://vuejs.org/images/logo.png",
+						title: "晚餐",
+						url: " "
+					},
 				]
 			}
 		},

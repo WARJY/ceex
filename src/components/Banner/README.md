@@ -38,7 +38,7 @@ e = {
 	src:"https://vuejs.org/images/logo.png",url: ""
 }
 ```
-@tap	banner点击事件		若传入url则直接跳转，否则触发事件
+@tap	banner点击事件		若传入url则直接跳转然后触发此事件，否则直接触发事件
 ```
 e = {
 	src:"https://vuejs.org/images/logo.png",url: ""
