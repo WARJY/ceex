@@ -2,11 +2,11 @@
 	<div class="banner-box">
 		<div class="banner-view" :style="{width:width + 'px',height:height + 'px'}">
 			<scroller class="banner" show-scrollbar="false" scroll-direction="horizontal" @scroll="handleScroll">
-				<image class="image" v-for="(item,index) in setting" :src="item.src" :style="{width:width + 'px',height:height + 'px'}" :ref="'image' + index"
+				<image class="image" v-for="(item,index) in items" :src="item.src" :style="{width:width + 'px',height:height + 'px'}" :ref="'image' + index"
 				    @click="handleClick(index)"></image>
 			</scroller>
 			<div class="options" :style="{width:width + 'px'}">
-				<div v-for="(item,index) in setting" :class="['orb',index===currentIndex?'active':' ']" @click="handleOrb(index)"></div>
+				<div v-for="(item,index) in items" :class="['orb',index===currentIndex?'active':' ']" @click="handleOrb(index)"></div>
 			</div>
 		</div>
 	</div>
@@ -18,7 +18,7 @@
 	export default {
 		name: "banner",
 		props: {
-			setting: {
+			items: {
 				type: Array,
 				required: true,
 				default(){
@@ -51,7 +51,7 @@
 					const el = this.$refs['image' + val][0]
 					dom.scrollToElement(el, {})
 					this.$data.anmFinish = false
-					this.$emit("switch", this.setting[val])
+					this.$emit("switch", this.items[val])
 				}
 				setTimeout(() => {
 					this.$data.anmFinish = true
@@ -65,7 +65,7 @@
 				let abs = Math.abs(x - this.$data.lastScroll)
 				if (abs > 100) {
 					if (x < this.$data.lastScroll) {
-						if (this.$data.anmFinish && this.setting.length - 1 >= index + 1) this.$data.currentIndex = index + 1
+						if (this.$data.anmFinish && this.items.length - 1 >= index + 1) this.$data.currentIndex = index + 1
 					} else {
 						if (this.$data.anmFinish && index - 1 >= 0) this.$data.currentIndex = index - 1
 					}
@@ -81,7 +81,7 @@
 			},
 			handleClick(index) {
 				if(index >= 0){
-					let current = this.setting[index]
+					let current = this.items[index]
 					if (current.url) {
 						navigator.push({
 							url: current.url,

@@ -1,16 +1,16 @@
 <template>
 	<div>
-		<div class="nav-content" :style="{minHeight:deviceHeight + 'px'}">
-			<div class="nav-container" ref="nav" :style="{width:750*setting.length + 'px',height:deviceHeight + 'px',transform:`translateX(${tranlateX})`}">
-				<div v-for="(item,index) in setting">
-					<div class="nav-tab" :style="{minHeight:deviceHeight + 'px'}">
+		<div class="nav-content" :style="{height:containerHeight}">
+			<div class="nav-container" ref="nav" :style="{width:containerWidth,height:containerHeight,transform:`translateX(${tranlateX})`}">
+				<div v-for="(item,index) in items">
+					<div class="nav-tab" :style="{height:containerHeight}">
 						<slot :name="item.name"></slot>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="nav-main">
-			<div v-for="(item,index) in setting" class="nav-item" v-on:click="handleSwitch(index)">
+			<div v-for="(item,index) in items" class="nav-item" v-on:click="handleSwitch(index)">
 				<!--字体图标-->
 				<div v-if="iconfont">
 					<text :class="['icon',index===currentIndex?'active':'']" :style="[index===currentIndex?styleActive.icon:styleDefault.icon]">{{item.icon}}</text>
@@ -35,7 +35,7 @@
 	export default {
 		name: "TabBar",
 		props: {
-			setting: {
+			items: {
 				type: Array,
 				required: true,
 				default(){
@@ -77,6 +77,19 @@
 				tranlateX: 0
 			}
 		},
+		computed:{
+			containerWidth(){
+				return (750*this.items.length) + "px"
+			},
+			containerHeight(){
+				if(WXEnvironment.platform === "Web"){
+					return (this.$data.deviceHeight - 90) + "px"
+				}else{
+					return (this.$data.deviceHeight - 90 - 40) + "px"
+				}
+				
+			}
+		},
 		watch: {
 			currentIndex(val, old) {
 				if (val >= 0) {
@@ -109,19 +122,19 @@
 			if (this.index) this.$data.currentIndex = this.index
 			this.$data.deviceHeight = WXEnvironment.deviceHeight
 			let hasLoad = Object.create(null)
-			let setting = this.setting
+			let setting = this.items
 			for (let k in setting) {
 				hasLoad[setting[k].name] = parseInt(k) !== this.$data.currentIndex ? false : true
 			}
 			this.$data.hasLoad = hasLoad
 			this.$emit("switch", {
-				load: this.setting[this.$data.currentIndex],
-				target: this.setting[this.$data.currentIndex]
+				load: this.items[this.$data.currentIndex],
+				target: this.items[this.$data.currentIndex]
 			})
 		},
 		methods: {
 			handleSwitch(index) {
-				let name = this.setting[index].name
+				let name = this.items[index].name
 				if (index >= 0 && this.$data.currentIndex >= 0) {
 					if (index !== this.$data.currentIndex) {
 						this.$data.currentIndex = index
@@ -130,13 +143,13 @@
 				if (this.$data.hasLoad[name] === false) {
 					this.$data.hasLoad[name] = true
 					this.$emit("switch", {
-						load: this.setting[this.$data.currentIndex],
-						target: this.setting[this.$data.currentIndex]
+						load: this.items[this.$data.currentIndex],
+						target: this.items[this.$data.currentIndex]
 					})
 					return
 				} else {
 					this.$emit("switch", {
-						target: this.setting[this.$data.currentIndex]
+						target: this.items[this.$data.currentIndex]
 					})
 				}
 			}
@@ -174,6 +187,7 @@
 
 	.nav-tab {
 		width: 750px;
+		overflow: hidden;
 	}
 
 	.nav-placeholer {

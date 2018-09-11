@@ -27,7 +27,7 @@
 ## 可配置参数
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| setting | `Array` |`Y`| `[]` | banner设置属性 |
+| Items | `Array` |`Y`| `[]` | banner配置属性 |
 | width | `Number` |`N`| `750` | banner宽度 |
 | height | `Number` |`N`| `270` | banner高度 |
 

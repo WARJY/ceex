@@ -5,24 +5,24 @@
 				<slot name="nav"></slot>
 			</div>
 			<div :style="{height:navHeight + 'px'}"></div>
-			<scroller class="page" :style="{width:deviceWidth + 'px',minHeight:pageHeight + 'px'}" @scroll="handleScroll">
+			<scroller class="page" :style="{width:deviceWidth + 'px',height:containerHeight + 'px'}" @scroll="handleScroll">
 				<refresh class="refresh" :style="{width:deviceWidth + 'px'}" @refresh="handleRefresh" @pullingdown="handlePullDown" :display="refreshing ? 'show' : 'hide'">
 					<div v-if="refreshSlot" ref="refreshSlot">
 						<slot name="refreshSlot"></slot>
 					</div>
 					<loading-indicator v-if="!refreshSlot" class="indicator"></loading-indicator>
 				</refresh>
-				<div :style="{minHeight:(pageHeight + 1) + 'px'}">
+				<div class="page-content" :style="{minHeight:(containerHeight+1) + 'px'}" ref="content">
 					<slot></slot>
-					<div :style="{height:bottomHeight + 'px'}"></div>
 				</div>
 				<loading class="loading" :style="{width:deviceWidth + 'px'}" @loading="handleLoading" :display="loading ? 'show' : 'hide'">
 					<div v-if="loadSlot" ref="loadingSlot">
 						<slot name="loadingSlot"></slot>
 					</div>
-					<loading-indicator v-if="!loadSlot" class="indicator-loading" :style="{bottom:bottomHeight + 'px'}"></loading-indicator>
+					<loading-indicator v-if="!loadSlot" class="indicator-loading"></loading-indicator>
 				</loading>
 			</scroller>
+			<text class="top" @click="handleTop">&#xe76c;</text>
 		</div>
 		<div v-if="!isShow">
 			<slot v-if="pageLoadSlot" name="pageLoading"></slot>
@@ -32,55 +32,63 @@
 </template>
 
 <script>
-	import { WxcLoading } from 'weex-ui'
+	import {
+		WxcLoading
+	} from 'weex-ui'
 	const modal = weex.requireModule('modal')
 	const dom = weex.requireModule('dom')
 	export default {
 		name: "Page",
-		components:{
-			WxcLoading:WxcLoading
+		components: {
+			WxcLoading: WxcLoading
 		},
 		props: {
 			refreshing: {
 				type: Boolean,
-				default(){
+				default () {
 					return false
 				}
 			},
 			loading: {
 				type: Boolean,
-				default(){
+				default () {
 					return false
 				}
 			},
 			navbarHeight: {
 				type: Number,
-				default(){
+				default () {
 					return 90
 				}
 			},
 			isShow: {
 				type: Boolean,
-				required:true,
-				default(){
+				required: true,
+				default () {
 					return false
 				}
 			},
 			refreshSlot: {
 				type: Boolean,
-				default(){
+				default () {
 					return false
 				}
 			},
 			loadSlot: {
 				type: Boolean,
-				default(){
+				default () {
 					return false
 				}
 			},
-			pageLoadSlot:{
+			pageLoadSlot: {
 				type: Boolean,
-				default(){
+				default () {
+					return false
+				}
+			},
+			toTop: {
+				type: Boolean,
+				default () {
 					return false
 				}
 			}
@@ -95,7 +103,22 @@
 				firstLoad: false
 			}
 		},
+		computed: {
+			containerHeight() {
+				if (WXEnvironment.platform === "Web") {
+					return (this.$data.deviceHeight - this.$data.navHeight - this.$data.bottomHeight)
+				} else {
+					return (this.$data.deviceHeight - this.$data.navHeight - this.$data.bottomHeight - 40)
+				}
+			}
+		},
 		created() {
+			if(this.toTop === true){
+				dom.addRule('fontFace', {
+					'fontFamily': "iconfont",
+					'src': "url('http://at.alicdn.com/t/font_811848_8vtd3k91r3i.ttf')"
+				})
+			}
 			this.$data.deviceHeight = WXEnvironment.deviceHeight
 			this.$data.bottomHeight = this.navbarHeight
 		},
@@ -109,7 +132,6 @@
 									if (option.result) {
 										let navHeight = option.size.height
 										if (navHeight > 0) this.$data.navHeight = navHeight
-										this.$data.pageHeight = this.$data.deviceHeight - navHeight - this.navbarHeight - 40
 										r(true)
 									}
 								})
@@ -130,17 +152,21 @@
 			}
 		},
 		methods: {
-			handleScroll(e){
-				this.$emit("scroll",e)
+			handleScroll(e) {
+				this.$emit("scroll", e)
 			},
-			handlePullDown(e){
-				this.$emit("pullDown",e)
+			handlePullDown(e) {
+				this.$emit("pullDown", e)
 			},
 			handleRefresh(e) {
 				this.$emit("refreshing")
 			},
 			handleLoading(e) {
 				this.$emit("loadining")
+			},
+			handleTop(e) {
+				let content = this.$refs.content
+				dom.scrollToElement(content)
 			}
 		}
 	}
@@ -153,6 +179,11 @@
 
 	.page {
 		background-color: #f5f5f5;
+		position: relative;
+	}
+
+	.page-content {
+		position: relative;
 	}
 
 	.nav {
@@ -168,6 +199,7 @@
 		justify-content: center;
 		padding-top: 16px;
 		padding-bottom: 16px;
+		position: absolute;
 	}
 
 	.loading {
@@ -190,5 +222,22 @@
 		color: #00d2ff;
 		margin-top: 16px;
 		margin-bottom: 16px;
+	}
+
+	.top {
+		font-family: iconfont;
+		width: 80px;
+		height: 80px;
+		background-color: #fff;
+		border-radius: 50%;
+		position: absolute;
+		right: 20px;
+		bottom: 20px;
+		font-size: 40px;
+		text-align: center;
+		line-height: 80px;
+		box-shadow: 0 0 6px #ccc;
+		border-width: 1px;
+		border-color: #ccc;
 	}
 </style>

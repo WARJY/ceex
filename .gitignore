@@ -59,4 +59,9 @@ typings/
 
 # next.js build output
 .next
-node-modules/    # 忽略 build/ 目录下的所有文件
+
+node-modules/
+
+platforms/
+
+dist/

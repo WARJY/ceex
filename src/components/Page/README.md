@@ -24,6 +24,7 @@
 | refreshing | `Bool` |`N`| `false` | 控制下拉刷新状态的显示 |
 | loading | `Bool` |`N`| `false` | 控制下拉加载状态的显示 |
 | navbarHeight | `Number` |`N`| `90` | TabBar高度，Page会在页面底部减去对应的高度 |
+| toTop | `Bool` |`N`| `false` | 是否开启回到顶部按钮 |
 | refreshSlot | `Bool` |`N`| `false` | 是否开启自定义下拉刷新slot |
 | loadSlot | `Bool` |`N`| `false` | 是否开启自定义上拉加载slot |
 | pageLoadSlot | `Bool` |`N`| `false` | 是否开启自定义页面加载slot |

@@ -1,13 +1,15 @@
 <template>
-	<tab-bar :iconfont="iconfont" :setting="navSetting" :index="0" :styleDefault="styleDefault" :styleActive="styleActive" @switch="handleSwitch">
+	<tab-bar :iconfont="iconfont" :items="navSetting" :index="0" :styleDefault="styleDefault" :styleActive="styleActive" @switch="handleSwitch">
 		<page slot="index" :isShow="showindex" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading"
-		    :navbarHeight="90">
-			<wxc-minibar slot="nav" title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多"></wxc-minibar>
-			<banner :setting="bannerSetting" @switch="" @tap="" />
-			<menu :row="4" :setting="menuSetting" />
+		    :navbarHeight="98" :toTop="true">
+			<wxc-minibar slot="nav" title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多" />
+			<banner :items="bannerSetting" />
+			<menu :row="4" :items="menuSetting" />
+			<listc title="我是标题" :items="listItems"></Listc>
+			<listc type="custom" title="我是custom" :items="listItems2"></Listc>
 		</page>
 		<page slot="my" :isShow="showmy" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading"
-		    :navbarHeight="90">
+		    :navbarHeight="188">
 		</page>
 	</tab-bar>
 </template>
@@ -17,17 +19,19 @@
 	import TabBar from "@/components/TabBar/index.js"
 	import Banner from "@/components/Banner/index.js"
 	import Menu from "@/components/Menu/index.js"
+	import Listc from "@/components/List/index.js"
 	import {
 		WxcMinibar
-	} from 'weex-ui';
+} from 'weex-ui';
 	export default {
 		name: "index",
 		components: {
-			Page: Page,
-			TabBar: TabBar,
-			Banner: Banner,
-			WxcMinibar: WxcMinibar,
-			Menu:Menu
+			Page,
+			TabBar,
+			Banner,
+			WxcMinibar,
+			Menu,
+			Listc
 		},
 		data() {
 			return {
@@ -35,7 +39,7 @@
 				loading: false,
 				showindex: false,
 				showmy: false,
-				iconfont: "//at.alicdn.com/t/font_811848_qrm8hrhlfkg.ttf",
+				iconfont: "//at.alicdn.com/t/font_811848_8vtd3k91r3i.ttf",
 				navSetting: [
 					{
 						name: "index",
@@ -109,6 +113,13 @@
 						title: "晚餐",
 						url: " "
 					}
+				],
+				listItems:[
+					{src:"https://vuejs.org/images/logo.png",title:"设置"},
+					{src:"https://vuejs.org/images/logo.png",title:"设置"}
+				],
+				listItems2:[
+					{src:"https://vuejs.org/images/logo.png",h1:"设置",h2:"我是设置",h3:"我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内",h1side:"h1side",h2side:"h2side",h3side:"h3side",label:["label1","label2"]},
 				]
 			}
 		},

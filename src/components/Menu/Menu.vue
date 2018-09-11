@@ -1,6 +1,6 @@
 <template>
 	<div class="menu">
-		<div v-for="(item,index) in setting" class="menu-item" :style="{width:itemWidth}" @click="handleTap(index)">
+		<div v-for="(item,index) in items" class="menu-item" :style="{width:itemWidth}" @click="handleTap(index)">
 			<image class="icon" :style="styleDefault.icon" :src="item.src" />
 			<text class="title" :style="styleDefault.title">{{item.title}}</text>
 		</div>
@@ -19,7 +19,7 @@
 					return 5
 				}
 			},
-			setting: {
+			items: {
 				type: Array,
 				required: true,
 				default () {
@@ -44,7 +44,7 @@
 		methods: {
 			handleTap(index) {
 				if (index >= 0) {
-					let current = this.setting[index]
+					let current = this.items[index]
 					if (current.url) {
 						navigator.push({
 							url: current.url,
