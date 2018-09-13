@@ -1,13 +1,13 @@
 <template>
 	<div class="list">
 		<text v-if="title" class="list-title">{{title}}</text>
-		<div class="list-content">
-			<div v-if="type==='default'" v-for="(item,index) in items" class="list-default" :style="childStyle(index)" @click="handleTap(index)">
+		<list class="list-content" :style="{height:listHeight}">
+			<cell v-if="type==='default'" v-for="(item,index) in items" class="list-default" :style="childStyle(index)" ref="cell" @click="handleTap(index)">
 				<image class="list-default-img" :src="item.src" :style="defaultStyle.img"></image>
 				<div class="list-default-bd" :style="defaultStyle.title">{{item.title}}</div>
 				<text class="list-default-ft" :style="defaultStyle.arrow">&#xe775;</text>
-			</div>
-			<div v-if="type==='custom'" v-for="(item,index) in items" class="list-custom" :style="childStyle(index)" @click="handleTap(index)">
+			</cell>
+			<cell v-if="type==='custom'" v-for="(item,index) in items" class="list-custom" :style="childStyle(index)" ref="cell" @click="handleTap(index)">
 				<div class="list-custom-main">
 					<image v-if="item.src" class="list-custom-img" :src="item.src"></image>
 					<div class="list-custom-content">
@@ -31,16 +31,33 @@
 						<text v-for="label in item.label" class="list-custom-label-item" :style="customStyle.label">{{label}}</text>
 					</div>
 				</div>
-			</div>
-		</div>
+			</cell>
+		</list>
 	</div>
 </template>
 
 <script>
 	const dom = weex.requireModule('dom')
 	const navigator = weex.requireModule('navigator')
+	let STYLE = {
+		default:{
+			img:{},
+			title:{},
+			arrow:{}
+		},
+		custom:{
+			img:{},
+			h1:{},
+			h1side:{},
+			h2:{},
+			h2side:{},
+			h3:{},
+			h3side:{},
+			label:{}
+		}
+	}
 	export default {
-		name: "List",
+		name: "Listc",
 		props: {
 			type:{
 				type:String,
@@ -61,29 +78,16 @@
 					return []
 				}
 			},
-			defaultStyle:{
+			styleDefault:{
 				type:Object,
 				default(){
-					return {
-						img:{},
-						title:{},
-						arrow:{}
-					}
+					return STYLE.default
 				}
 			},
-			customStyle:{
+			styleCustom:{
 				type:Object,
 				default(){
-					return {
-						img:{},
-						h1:{},
-						h1side:{},
-						h2:{},
-						h2side:{},
-						h3:{},
-						h3side:{},
-						label:{}
-					}
+					return STYLE.custom
 				}
 			}
 		},
@@ -91,16 +95,41 @@
 			return {
 				childStyle(index){
 					if(index === this.items.length-1) return {borderBottomWidth:0}
-				}
+				},
+				listHeight:0
+			}
+		},
+		computed:{
+			defaultStyle(){
+				return Object.assign(STYLE.default,this.styleDefault)
+			},
+			customStyle(){
+				return Object.assign(STYLE.custom,this.styleCustom)
 			}
 		},
 		created() {
 			dom.addRule('fontFace', {
 				'fontFamily': "iconfont",
 				'src': "url('http://at.alicdn.com/t/font_811848_8vtd3k91r3i.ttf')"
-			});
+			})
+			if(this.type === 'default') this.$data.listHeight = 90 * this.items.length + 'px'
+			if(this.type === 'custom') this.$data.listHeight = 260 * this.items.length + 'px'
+		},
+		//weex的mounted方法有bug，通过updated代替
+		updated() {
+			this.$nextTick(()=> {
+				if(this.styleDefault !== STYLE.default) return this.getHeight()
+				if(this.styleCustom !== STYLE.custom) return this.getHeight()
+			})
 		},
 		methods: {
+			getHeight(){
+				dom.getComponentRect(this.$refs.cell, option=>{
+					if(option.result === true){
+						this.$data.listHeight = option.size.height * this.items.length + 'px'
+					}
+				})
+			},
 			handleTap(index){
 				let current = this.items[index]
 				if(current.url){
@@ -148,12 +177,14 @@
 	@type === default 
 	*/
 	.list-default{
+		width: 730px;
 		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
 		padding-top: 20px;
 		padding-bottom: 20px;
 		padding-right: 20px;
 		margin-left: 20px;
-		width: 730px;
 		border-color: #d9d9d9;
 		border-bottom-width: 1px;
 		position: relative;
