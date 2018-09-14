@@ -1,10 +1,6 @@
 <template>
 	<div>
 		<div class="container" v-if="isShow">
-			<div class="nav" ref="nav">
-				<slot name="nav"></slot>
-			</div>
-			<div :style="{height:navHeight + 'px'}"></div>
 			<scroller class="page" :style="{width:deviceWidth + 'px',height:containerHeight + 'px'}" @scroll="handleScroll">
 				<refresh class="refresh" :style="{width:deviceWidth + 'px'}" @refresh="handleRefresh" @pullingdown="handlePullDown" :display="refreshing ? 'show' : 'hide'">
 					<div v-if="refreshSlot" ref="refreshSlot">
@@ -32,11 +28,14 @@
 </template>
 
 <script>
-	import {
-		WxcLoading
-	} from 'weex-ui'
+	import { WxcLoading } from 'weex-ui'
 	const modal = weex.requireModule('modal')
 	const dom = weex.requireModule('dom')
+	const DEFAULT = {
+		navTopHeight : 90,	//导航栏高度
+		navBarHeight : 98,	//标签栏高度
+		stateBarHeight: 40	//状态栏高度
+	}
 	export default {
 		name: "Page",
 		components: {
@@ -55,10 +54,22 @@
 					return false
 				}
 			},
-			navbarHeight: {
+			stateBarHeight: {
 				type: Number,
 				default () {
-					return 90
+					return DEFAULT.stateBarHeight
+				}
+			},
+			navTopHeight: {
+				type: Number,
+				default () {
+					return DEFAULT.navTopHeight
+				}
+			},
+			navBarHeight: {
+				type: Number,
+				default () {
+					return DEFAULT.navBarHeight
 				}
 			},
 			isShow: {
@@ -97,18 +108,15 @@
 			return {
 				deviceWidth: 750,
 				deviceHeight: 0,
-				pageHeight: 0,
-				navHeight: 0,
-				bottomHeight: 0,
 				firstLoad: false
 			}
 		},
 		computed: {
 			containerHeight() {
 				if (WXEnvironment.platform === "Web") {
-					return (this.$data.deviceHeight - this.$data.navHeight - this.$data.bottomHeight)
+					return (this.$data.deviceHeight - this.navTopHeight - this.navBarHeight)
 				} else {
-					return (this.$data.deviceHeight - this.$data.navHeight - this.$data.bottomHeight - 40)
+					return (this.$data.deviceHeight - this.navTopHeight - this.navBarHeight - this.stateBarHeight)
 				}
 			}
 		},
@@ -120,36 +128,6 @@
 				})
 			}
 			this.$data.deviceHeight = WXEnvironment.deviceHeight
-			this.$data.bottomHeight = this.navbarHeight
-		},
-		watch: {
-			isShow: function (val, old) {
-				if (val === true && this.$data.firstLoad === false) {
-					setTimeout(() => {
-						let getNav = new Promise((r, j) => {
-							try {
-								dom.getComponentRect(this.$refs.nav, option => {
-									if (option.result) {
-										let navHeight = option.size.height
-										if (navHeight > 0) this.$data.navHeight = navHeight
-										r(true)
-									}
-								})
-							} catch (e) {
-								console.log("e")
-							}
-						})
-						let process = [getNav]
-						Promise.all(process).then(data => {
-							let flag = true
-							for (let i in data) {
-								if (data[i] !== true) flag = false
-							}
-							if (flag === true) this.$data.firstLoad = true
-						})
-					}, 100)
-				}
-			}
 		},
 		methods: {
 			handleScroll(e) {

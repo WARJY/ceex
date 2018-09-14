@@ -1,17 +1,17 @@
 <template>
-	<tab-bar :iconfont="iconfont" :items="navSetting" :index="0" :styleDefault="styleDefault" :styleActive="styleActive" @switch="handleSwitch">
-		<page slot="index" :isShow="showindex" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading"
-		    :navbarHeight="98" :toTop="true">
-			<wxc-minibar slot="nav" title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多" />
-			<banner :items="bannerSetting" />
-			<menu :row="4" :items="menuSetting" />
-			<listc title="我是标题" :items="listItems"></Listc>
-			<listc type="custom" title="我是custom" :items="listItems2"></Listc>
-		</page>
-		<page slot="my" :isShow="showmy" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading"
-		    :navbarHeight="188">
-		</page>
-	</tab-bar>
+	<div>
+		<wxc-minibar title="标题" background-color="#009ff0" text-color="#FFFFFF" right-text="更多" />
+		<tab-bar :iconfont="iconfont" :items="navSetting" :index="0" :styleDefault="styleDefault" :styleActive="styleActive" @switch="handleSwitch">
+			<page slot="index" :isShow="showindex" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading" :toTop="true">
+				<banner :items="bannerSetting" />
+				<menu :row="4" :items="menuSetting" />
+				<listc title="我是标题" :items="listItems"></Listc>
+				<listc type="custom" title="我是custom" :items="listItems2"></Listc>
+			</page>
+			<page slot="my" :isShow="showmy" :refreshing="refreshing" @refreshing="handleRefresh" :loading="loading" @loadining="handleLoading">
+			</page>
+		</tab-bar>
+	</div>
 </template>
 
 <script>

@@ -39,21 +39,27 @@
 <script>
 	const dom = weex.requireModule('dom')
 	const navigator = weex.requireModule('navigator')
-	let STYLE = {
+	const DEFAULT = {
 		default:{
-			img:{},
-			title:{},
-			arrow:{}
+			height:90,
+			style:{
+				img:{},
+				title:{},
+				arrow:{}
+			}
 		},
 		custom:{
-			img:{},
-			h1:{},
-			h1side:{},
-			h2:{},
-			h2side:{},
-			h3:{},
-			h3side:{},
-			label:{}
+			height:260,
+			style:{
+				img:{},
+				h1:{},
+				h1side:{},
+				h2:{},
+				h2side:{},
+				h3:{},
+				h3side:{},
+				label:{}
+			}
 		}
 	}
 	export default {
@@ -81,13 +87,13 @@
 			styleDefault:{
 				type:Object,
 				default(){
-					return STYLE.default
+					return DEFAULT.default.style
 				}
 			},
 			styleCustom:{
 				type:Object,
 				default(){
-					return STYLE.custom
+					return DEFAULT.custom.style
 				}
 			}
 		},
@@ -101,10 +107,10 @@
 		},
 		computed:{
 			defaultStyle(){
-				return Object.assign(STYLE.default,this.styleDefault)
+				return Object.assign(DEFAULT.default.style,this.styleDefault)
 			},
 			customStyle(){
-				return Object.assign(STYLE.custom,this.styleCustom)
+				return Object.assign(DEFAULT.custom.style,this.styleCustom)
 			}
 		},
 		created() {
@@ -112,14 +118,16 @@
 				'fontFamily': "iconfont",
 				'src': "url('http://at.alicdn.com/t/font_811848_8vtd3k91r3i.ttf')"
 			})
-			if(this.type === 'default') this.$data.listHeight = 90 * this.items.length + 'px'
-			if(this.type === 'custom') this.$data.listHeight = 260 * this.items.length + 'px'
+			if(this.type === 'default') this.$data.listHeight = DEFAULT.default.height * this.items.length + 'px'
+			if(this.type === 'custom') this.$data.listHeight = DEFAULT.custom.height * this.items.length + 'px'
 		},
 		//weex的mounted方法有bug，通过updated代替
 		updated() {
 			this.$nextTick(()=> {
-				if(this.styleDefault !== STYLE.default) return this.getHeight()
-				if(this.styleCustom !== STYLE.custom) return this.getHeight()
+				if(this.$data.listHeight === 0){
+					if(this.styleDefault !== DEFAULT.default.style) return this.getHeight()
+					if(this.styleCustom !== DEFAULT.custom.style) return this.getHeight()
+				}
 			})
 		},
 		methods: {
